@@ -1,0 +1,224 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@400;700&display=swap');
+
+:root {
+    --primary-cyan: #00f2ff;
+    --primary-purple: #bc00ff;
+    --bg-dark: #0a001a;
+    --bg-darker: #05000d;
+    --text-white: #ffffff;
+    --text-gray: #b0b0b0;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glow-cyan: 0 0 15px rgba(0, 242, 255, 0.5);
+    --glow-purple: 0 0 15px rgba(188, 0, 255, 0.5);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    line-height: 1.6;
+    overflow-x: hidden;
+    background: radial-gradient(circle at 50% 50%, #1a0033 0%, var(--bg-dark) 100%);
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 2px;
+}
+
+/* --- Layout --- */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+section {
+    padding: 100px 0;
+}
+
+/* --- Navigation --- */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(10, 0, 26, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--glass-border);
+    height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--primary-cyan);
+    text-decoration: none;
+    text-shadow: var(--glow-cyan);
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-white);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: var(--transition);
+}
+
+.nav-links a:hover {
+    color: var(--primary-cyan);
+    text-shadow: var(--glow-cyan);
+}
+
+.lang-switch {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.lang-btn {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-white);
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    transition: var(--transition);
+}
+
+.lang-btn.active {
+    background: var(--primary-cyan);
+    color: var(--bg-dark);
+    border-color: var(--primary-cyan);
+}
+
+/* --- Hero --- */
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('/Users/fgarridovalenz/.gemini/antigravity/brain/bed63259-4821-4f34-b5d7-c8e32b743fea/rotterdam_cyber_skyline_1770727489225.png') no-repeat center center/cover;
+    opacity: 0.2;
+    z-index: -1;
+}
+
+.hero-content h1 {
+    font-size: 6rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(90deg, var(--primary-cyan), var(--primary-purple));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 30px rgba(0, 242, 255, 0.3));
+}
+
+.hero-content p {
+    font-size: 1.25rem;
+    color: var(--text-gray);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* --- Cards / Glassmorphism --- */
+.glass-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 3rem;
+    margin-top: 2rem;
+    transition: var(--transition);
+}
+
+.glass-card:hover {
+    border-color: var(--primary-cyan);
+    box-shadow: 0 0 30px rgba(0, 242, 255, 0.1);
+}
+
+.section-title {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    text-align: center;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: var(--primary-cyan);
+    border-radius: 2px;
+}
+
+/* --- Footer --- */
+footer {
+    padding: 50px 0;
+    border-top: 1px solid var(--glass-border);
+    text-align: center;
+}
+
+.partner-logos {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    margin-top: 2rem;
+    opacity: 0.7;
+    filter: grayscale(1) invert(1);
+}
+
+.partner-logos img {
+    height: 40px;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+
+    .hero-content h1 {
+        font-size: 3rem;
+    }
+}

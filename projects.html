@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | SPARC</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">SPARC</a>
+            <ul class="nav-links">
+                <li><a href="index.html" data-key="nav_home">Home</a></li>
+                <li><a href="index.html#about" data-key="nav_about">About SPARC</a></li>
+                <li><a href="projects.html" data-key="nav_projects">Projects</a></li>
+                <li><a href="people.html" data-key="nav_people">People</a></li>
+                <li><a href="index.html#contact" data-key="nav_contact">Contact Us</a></li>
+            </ul>
+            <div class="lang-switch">
+                <button class="lang-btn active" data-lang="en" onclick="switchLang('en')">EN</button>
+                <button class="lang-btn" data-lang="nl" onclick="switchLang('nl')">NL</button>
+            </div>
+        </div>
+    </nav>
+
+    <main style="padding-top: 120px;">
+        <section class="container">
+            <h2 class="section-title" data-key="projects_title">Projects</h2>
+            <p style="text-align: center; color: var(--text-gray); margin-bottom: 3rem;">Discover our ongoing AI
+                initiatives within the Rotterdam municipality.</p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">
+                <!-- Project Dashboard Cards -->
+                <div class="glass-card" style="padding: 2.5rem;">
+                    <span
+                        style="color: var(--primary-cyan); font-weight: 800; font-size: 0.8rem; text-transform: uppercase;">Infrastructure</span>
+                    <h3 style="margin: 1rem 0;">Smart Traffic Management</h3>
+                    <p style="color: var(--text-gray); font-size: 0.95rem;">Optimizing traffic flow across the Erasmus
+                        bridge using real-time AI computer vision models.</p>
+                    <a href="#"
+                        style="display: inline-block; margin-top: 1.5rem; color: var(--primary-cyan); text-decoration: none; font-weight: 600;">View
+                        Details &rarr;</a>
+                </div>
+
+                <div class="glass-card" style="padding: 2.5rem;">
+                    <span
+                        style="color: var(--primary-purple); font-weight: 800; font-size: 0.8rem; text-transform: uppercase;">Public
+                        Service</span>
+                    <h3 style="margin: 1rem 0;">AI Resident Assistant</h3>
+                    <p style="color: var(--text-gray); font-size: 0.95rem;">Large Language Model integration for
+                        automated administrative queries in the Rotterdam city hall.</p>
+                    <a href="#"
+                        style="display: inline-block; margin-top: 1.5rem; color: var(--primary-cyan); text-decoration: none; font-weight: 600;">View
+                        Details &rarr;</a>
+                </div>
+
+                <div class="glass-card" style="padding: 2.5rem;">
+                    <span
+                        style="color: var(--primary-cyan); font-weight: 800; font-size: 0.8rem; text-transform: uppercase;">Sustainability</span>
+                    <h3 style="margin: 1rem 0;">Energy Grid Optimization</h3>
+                    <p style="color: var(--text-gray); font-size: 0.95rem;">Predictive maintenance and load balancing
+                        for the city's transitioning green energy grid.</p>
+                    <a href="#"
+                        style="display: inline-block; margin-top: 1.5rem; color: var(--primary-cyan); text-decoration: none; font-weight: 600;">View
+                        Details &rarr;</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container text-center">
+            <p data-key="footer_partners">Partners</p>
+            <div class="partner-logos">
+                <span>TU Delft</span>
+                <span>Erasmus University</span>
+                <span>Gemeente Rotterdam</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

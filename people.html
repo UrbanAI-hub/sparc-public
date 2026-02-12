@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>People | SPARC</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">SPARC</a>
+            <ul class="nav-links">
+                <li><a href="index.html" data-key="nav_home">Home</a></li>
+                <li><a href="index.html#about" data-key="nav_about">About SPARC</a></li>
+                <li><a href="projects.html" data-key="nav_projects">Projects</a></li>
+                <li><a href="people.html" data-key="nav_people">People</a></li>
+                <li><a href="index.html#contact" data-key="nav_contact">Contact Us</a></li>
+            </ul>
+            <div class="lang-switch">
+                <button class="lang-btn active" data-lang="en" onclick="switchLang('en')">EN</button>
+                <button class="lang-btn" data-lang="nl" onclick="switchLang('nl')">NL</button>
+            </div>
+        </div>
+    </nav>
+
+    <main style="padding-top: 120px;">
+        <section class="container">
+            <h2 class="section-title" data-key="people_title">Our Team</h2>
+            <p style="text-align: center; color: var(--text-gray); margin-bottom: 3rem;">The experts bridging the gap
+                between academia and public service.</p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 3rem;">
+                <!-- Team Members -->
+                <div class="glass-card" style="text-align: center; padding: 2.5rem;">
+                    <div
+                        style="width: 120px; height: 120px; background: linear-gradient(45deg, var(--primary-cyan), var(--primary-purple)); border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800;">
+                        JD</div>
+                    <h3 style="margin-bottom: 0.5rem;">Jane Doe</h3>
+                    <p style="color: var(--primary-cyan); font-weight: 600; margin-bottom: 1rem;">Research Lead</p>
+                    <p style="font-size: 0.9rem; color: var(--text-gray);">TU Delft Specialist in Autonomous Urban
+                        Systems.</p>
+                </div>
+
+                <div class="glass-card" style="text-align: center; padding: 2.5rem;">
+                    <div
+                        style="width: 120px; height: 120px; background: linear-gradient(45deg, var(--primary-purple), var(--primary-cyan)); border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800;">
+                        MS</div>
+                    <h3 style="margin-bottom: 0.5rem;">Marco Smith</h3>
+                    <p style="color: var(--primary-cyan); font-weight: 600; margin-bottom: 1rem;">Public Innovation Lead
+                    </p>
+                    <p style="font-size: 0.9rem; color: var(--text-gray);">Municipality of Rotterdam Liaison.</p>
+                </div>
+
+                <div class="glass-card" style="text-align: center; padding: 2.5rem;">
+                    <div
+                        style="width: 120px; height: 120px; background: linear-gradient(45deg, var(--primary-cyan), var(--primary-purple)); border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800;">
+                        EV</div>
+                    <h3 style="margin-bottom: 0.5rem;">Elena Van Der Berg</h3>
+                    <p style="color: var(--primary-cyan); font-weight: 600; margin-bottom: 1rem;">AI Ethicist</p>
+                    <p style="font-size: 0.9rem; color: var(--text-gray);">Erasmus University Professor of Digital
+                        Ethics.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container text-center">
+            <p data-key="footer_partners">Partners</p>
+            <div class="partner-logos">
+                <span>TU Delft</span>
+                <span>Erasmus University</span>
+                <span>Gemeente Rotterdam</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
