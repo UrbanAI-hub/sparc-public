@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Details | SPARC</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo"><img src="source/logos/sparc-logo.png" alt="SPARC"></a>
+            <ul class="nav-links">
+                <li><a href="index.html" data-key="nav_home">Home</a></li>
+                <li><a href="index.html#about" data-key="nav_about">About SPARC</a></li>
+                <li><a href="projects.html" data-key="nav_projects">Projects</a></li>
+                <li><a href="people.html" data-key="nav_people">People</a></li>
+                <li><a href="index.html#contact" data-key="nav_contact">Contact Us</a></li>
+            </ul>
+            <div class="lang-switch">
+                <button id="theme-toggle" aria-label="Toggle Theme">🌙</button>
+                <button class="lang-btn active" data-lang="en" onclick="switchLang('en')">EN</button>
+                <button class="lang-btn" data-lang="nl" onclick="switchLang('nl')">NL</button>
+            </div>
+        </div>
+    </nav>
+
+    <main style="padding-top: 120px; padding-bottom: 80px;">
+        <div class="container">
+            <a href="projects.html" style="color: var(--primary-cyan); text-decoration: none; font-weight: 600; display: inline-block; margin-bottom: 2rem;">&larr; Back to Projects</a>
+            
+            <h1 id="project-title" style="margin-bottom: 1.5rem; font-size: 2.5rem; line-height: 1.2;"></h1>
+            <p id="project-desc" style="color: var(--text-gray); font-size: 1.15rem; margin-bottom: 3rem; line-height: 1.6;"></p>
+            
+            <!-- Project image -->
+            <div id="project-image" style="width: 100%; height: 400px; background: url('rotterdam-skyline.png') no-repeat center center/cover; border-radius: 20px; margin-bottom: 3rem; border: 1px solid var(--glass-border); box-shadow: 0 10px 30px rgba(0,0,0,0.1); opacity: 0.9;"></div>
+            
+            <!-- Extended details -->
+            <div class="glass-card" style="min-height: 300px; padding: 3rem;">
+                <h3 style="color: var(--text-main); margin-bottom: 1rem;" data-key="project_details_title">Project Details</h3>
+                <div id="project-details">
+                    <p style="color: var(--text-gray);"><em>Detailed information, methodologies, and outcomes for this project will be added here soon...</em></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container text-center">
+            <p data-key="footer_partners">Partners</p>
+            <div class="partner-logos">
+                <img src="source/logos/tudelft-logo.png" alt="TU Delft">
+                <img src="source/logos/erasmus-logo.png" alt="Erasmus University">
+                <img src="source/logos/rotterdam-logo.png" alt="Gemeente Rotterdam">
+                <img src="source/logos/convergence-logo.png" alt="Convergence" style="height: 50px;">
+            </div>
+            <p style="margin-top: 3rem; color: var(--text-gray); font-size: 0.8rem;">&copy; 2026 SPARC. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Load project data from JSON
+        (function() {
+            var params = new URLSearchParams(window.location.search);
+            var projectId = params.get("id");
+            if (!projectId) { window.location.href = "projects.html"; return; }
+
+            fetch("source/projects/projects.json")
+                .then(function(r) { return r.json(); })
+                .then(function(projects) {
+                    var project = null;
+                    for (var i = 0; i < projects.length; i++) {
+                        if (projects[i].id === projectId) { project = projects[i]; break; }
+                    }
+                    if (!project) { window.location.href = "projects.html"; return; }
+
+                    var lang = localStorage.getItem("sparc_lang") || "en";
+
+                    function renderProject() {
+                        lang = localStorage.getItem("sparc_lang") || "en";
+                        document.getElementById("project-title").textContent = project["title_" + lang];
+                        document.getElementById("project-desc").textContent = project["desc_" + lang];
+                        document.title = project["title_" + lang] + " | SPARC";
+                    }
+
+                    renderProject();
+
+                    // Check for project-specific image
+                    var img = new Image();
+                    img.onload = function() {
+                        document.getElementById("project-image").style.background = 
+                            "url('source/projects/" + projectId + "/image.png') no-repeat center center/cover";
+                    };
+                    img.src = "source/projects/" + projectId + "/image.png";
+
+                    // Override switchLang to also update project content
+                    var originalSwitchLang = window.switchLang;
+                    window.switchLang = function(l) {
+                        originalSwitchLang(l);
+                        renderProject();
+                    };
+                });
+        })();
+    </script>
+</body>
+</html>

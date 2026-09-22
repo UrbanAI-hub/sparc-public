@@ -13,7 +13,7 @@
 <body>
     <nav>
         <div class="container">
-            <a href="index.html" class="logo">SPARC</a>
+            <a href="index.html" class="logo"><img src="source/logos/sparc-logo.png" alt="SPARC"></a>
             <ul class="nav-links">
                 <li><a href="index.html" data-key="nav_home">Home</a></li>
                 <li><a href="index.html#about" data-key="nav_about">About SPARC</a></li>
@@ -22,6 +22,7 @@
                 <li><a href="#contact" data-key="nav_contact">Contact Us</a></li>
             </ul>
             <div class="lang-switch">
+                <button id="theme-toggle" aria-label="Toggle Theme">🌙</button>
                 <button class="lang-btn active" data-lang="en" onclick="switchLang('en')">EN</button>
                 <button class="lang-btn" data-lang="nl" onclick="switchLang('nl')">NL</button>
             </div>
@@ -32,7 +33,7 @@
         <section id="home" class="hero">
             <div class="hero-bg"></div>
             <div class="container hero-content">
-                <h1 data-key="hero_title">SPARC</h1>
+                <img src="source/logos/sparc-logo.png" alt="SPARC" class="hero-logo">
                 <p data-key="hero_subtitle">Strategic Partnership for AI and Rotterdam's Challenges</p>
             </div>
         </section>
@@ -45,6 +46,7 @@
                 <p data-key="about_desc_2"></p>
             </div>
 
+            <div class="vision-mission-grid">
             <div id="vision" style="margin-top: 4rem;">
                 <h3 style="color: var(--primary-cyan); margin-bottom: 1rem;" data-key="vision_title">Our Vision</h3>
                 <div class="glass-card">
@@ -58,13 +60,15 @@
                     <p data-key="mission_desc"></p>
                 </div>
             </div>
+        </div>
         </section>
 
         <section id="contact" class="container">
             <h2 class="section-title" data-key="contact_title">Contact Us</h2>
             <div class="glass-card">
-                <p>Email: contact@sparc-rotterdam.nl</p>
-                <p>Location: Rotterdam, Netherlands</p>
+                <p style="margin-bottom: 1.5rem;" data-key="contact_desc">For general inquiries or to learn more about our projects, please reach out to our leads, Tommie Perenboom or Francisco Garrido-Valenzuela.</p>
+                <p><strong data-key="contact_email">Email:</strong> contact@sparc-rotterdam.nl</p>
+                <p><strong data-key="contact_location">Location:</strong> Rotterdam, Netherlands</p>
             </div>
         </section>
     </main>
@@ -73,11 +77,12 @@
         <div class="container text-center">
             <p data-key="footer_partners">Partners</p>
             <div class="partner-logos">
-                <span>TU Delft</span>
-                <span>Erasmus University</span>
-                <span>Gemeente Rotterdam</span>
+                <img src="source/logos/tudelft-logo.png" alt="TU Delft">
+                <img src="source/logos/erasmus-logo.png" alt="Erasmus University">
+                <img src="source/logos/rotterdam-logo.png" alt="Gemeente Rotterdam">
+                <img src="source/logos/convergence-logo.png" alt="Convergence" style="height: 50px;">
             </div>
-            <p style="margin-top: 3rem; color: var(--text-gray); font-size: 0.8rem;">&copy; 2024 SPARC. All rights
+            <p style="margin-top: 3rem; color: var(--text-gray); font-size: 0.8rem;">&copy; 2026 SPARC. All rights
                 reserved.</p>
         </div>
     </footer>

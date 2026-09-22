@@ -11,7 +11,7 @@
 <body>
     <nav>
         <div class="container">
-            <a href="index.html" class="logo">SPARC</a>
+            <a href="index.html" class="logo"><img src="source/logos/sparc-logo.png" alt="SPARC"></a>
             <ul class="nav-links">
                 <li><a href="index.html" data-key="nav_home">Home</a></li>
                 <li><a href="index.html#about" data-key="nav_about">About SPARC</a></li>
@@ -20,50 +20,90 @@
                 <li><a href="index.html#contact" data-key="nav_contact">Contact Us</a></li>
             </ul>
             <div class="lang-switch">
+                <button id="theme-toggle" aria-label="Toggle Theme">🌙</button>
                 <button class="lang-btn active" data-lang="en" onclick="switchLang('en')">EN</button>
                 <button class="lang-btn" data-lang="nl" onclick="switchLang('nl')">NL</button>
             </div>
         </div>
     </nav>
 
-    <main style="padding-top: 120px;">
+    <main style="padding-top: 120px; padding-bottom: 80px;">
         <section class="container">
             <h2 class="section-title" data-key="people_title">Our Team</h2>
-            <p style="text-align: center; color: var(--text-gray); margin-bottom: 3rem;">The experts bridging the gap
-                between academia and public service.</p>
+            <p style="text-align: center; color: var(--text-gray); margin-bottom: 3rem;" data-key="people_subtitle">The experts bridging the gap between academia and public service.</p>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 3rem;">
-                <!-- Team Members -->
-                <div class="glass-card" style="text-align: center; padding: 2.5rem;">
-                    <div
-                        style="width: 120px; height: 120px; background: linear-gradient(45deg, var(--primary-cyan), var(--primary-purple)); border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800;">
-                        JD</div>
-                    <h3 style="margin-bottom: 0.5rem;">Jane Doe</h3>
-                    <p style="color: var(--primary-cyan); font-weight: 600; margin-bottom: 1rem;">Research Lead</p>
-                    <p style="font-size: 0.9rem; color: var(--text-gray);">TU Delft Specialist in Autonomous Urban
-                        Systems.</p>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 3rem;">
+                <div class="glass-card" style="width: 280px; text-align: center; padding: 2.5rem; display: flex; flex-direction: column; align-items: center;">
+                    <img src="source/people/Francisco.jpg" alt="Francisco Garrido-Valenzuela" style="width: 140px; height: 140px; border-radius: 50%; object-fit: cover; margin-bottom: 1.5rem; border: 3px solid var(--primary-cyan); background-color: white;">
+                    <h3 style="margin-bottom: 0.5rem; line-height: 1.2;"><span style="font-weight: 800; font-size: 1.4rem;">Francisco</span><br><span style="font-weight: 400; font-size: 1.2rem;">Garrido-Valenzuela</span></h3>
+                    <p style="color: var(--primary-cyan); font-weight: 600; margin-bottom: 0.5rem; margin-top: 0.5rem; font-size: 0.95rem;">Program Lead</p>
+                    <a href="mailto:f.garridov@tudelft.nl" style="font-size: 0.85rem; color: var(--text-gray); text-decoration: none;">f.garridov@tudelft.nl</a>
                 </div>
-
-                <div class="glass-card" style="text-align: center; padding: 2.5rem;">
-                    <div
-                        style="width: 120px; height: 120px; background: linear-gradient(45deg, var(--primary-purple), var(--primary-cyan)); border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800;">
-                        MS</div>
-                    <h3 style="margin-bottom: 0.5rem;">Marco Smith</h3>
-                    <p style="color: var(--primary-cyan); font-weight: 600; margin-bottom: 1rem;">Public Innovation Lead
-                    </p>
-                    <p style="font-size: 0.9rem; color: var(--text-gray);">Municipality of Rotterdam Liaison.</p>
+                <div class="glass-card" style="width: 280px; text-align: center; padding: 2.5rem; display: flex; flex-direction: column; align-items: center;">
+                    <img src="source/people/Tommie.png" alt="Tommie Perenboom" style="width: 140px; height: 140px; border-radius: 50%; object-fit: cover; margin-bottom: 1.5rem; border: 3px solid var(--primary-cyan); background-color: white;">
+                    <h3 style="margin-bottom: 0.5rem; line-height: 1.2;"><span style="font-weight: 800; font-size: 1.4rem;">Tommie</span><br><span style="font-weight: 400; font-size: 1.2rem;">Perenboom</span></h3>
+                    <p style="color: var(--primary-cyan); font-weight: 600; margin-bottom: 0.5rem; margin-top: 0.5rem; font-size: 0.95rem;">Municipal Lead</p>
+                    <a href="mailto:taa.perenboom@rotterdam.nl" style="font-size: 0.85rem; color: var(--text-gray); text-decoration: none;">taa.perenboom@rotterdam.nl</a>
                 </div>
-
-                <div class="glass-card" style="text-align: center; padding: 2.5rem;">
-                    <div
-                        style="width: 120px; height: 120px; background: linear-gradient(45deg, var(--primary-cyan), var(--primary-purple)); border-radius: 50%; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800;">
-                        EV</div>
-                    <h3 style="margin-bottom: 0.5rem;">Elena Van Der Berg</h3>
-                    <p style="color: var(--primary-cyan); font-weight: 600; margin-bottom: 1rem;">AI Ethicist</p>
-                    <p style="font-size: 0.9rem; color: var(--text-gray);">Erasmus University Professor of Digital
-                        Ethics.</p>
+                <div class="glass-card" style="width: 280px; text-align: center; padding: 2.5rem; display: flex; flex-direction: column; align-items: center;">
+                    <img src="source/people/Nicolette.png" alt="Nicolette Stehouwer-den Hollander" style="width: 140px; height: 140px; border-radius: 50%; object-fit: cover; margin-bottom: 1.5rem; border: 3px solid var(--primary-cyan); background-color: white;">
+                    <h3 style="margin-bottom: 0.5rem; line-height: 1.2;"><span style="font-weight: 800; font-size: 1.4rem;">Nicolette</span><br><span style="font-weight: 400; font-size: 1.2rem;">Stehouwer-den Hollander</span></h3>
+                    <p style="color: var(--primary-cyan); font-weight: 600; margin-bottom: 0.5rem; margin-top: 0.5rem; font-size: 0.95rem;">Innovation Manager EUR</p>
+                    <a href="mailto:stehouwer@eur.nl" style="font-size: 0.85rem; color: var(--text-gray); text-decoration: none;">stehouwer@eur.nl</a>
+                </div>
+                <div class="glass-card" style="width: 280px; text-align: center; padding: 2.5rem; display: flex; flex-direction: column; align-items: center;">
+                    <img src="source/people/Tim.jpg" alt="Tim Meijster" style="width: 140px; height: 140px; border-radius: 50%; object-fit: cover; margin-bottom: 1.5rem; border: 3px solid var(--primary-cyan); background-color: white;">
+                    <h3 style="margin-bottom: 0.5rem; line-height: 1.2;"><span style="font-weight: 800; font-size: 1.4rem;">Tim</span><br><span style="font-weight: 400; font-size: 1.2rem;">Meijster</span></h3>
+                    <p style="color: var(--primary-cyan); font-weight: 600; margin-bottom: 0.5rem; margin-top: 0.5rem; font-size: 0.95rem;">Innovation Manager TU Delft</p>
+                    <a href="mailto:T.Meijster@tudelft.nl" style="font-size: 0.85rem; color: var(--text-gray); text-decoration: none;">T.Meijster@tudelft.nl</a>
+                </div>
+                <div class="glass-card" style="width: 280px; text-align: center; padding: 2.5rem; display: flex; flex-direction: column; align-items: center;">
+                    <img src="source/people/Sander.jpg" alt="Sander van Cranenburgh" style="width: 140px; height: 140px; border-radius: 50%; object-fit: cover; margin-bottom: 1.5rem; border: 3px solid var(--primary-cyan); background-color: white;">
+                    <h3 style="margin-bottom: 0.5rem; line-height: 1.2;"><span style="font-weight: 800; font-size: 1.4rem;">Sander</span><br><span style="font-weight: 400; font-size: 1.2rem;">van Cranenburgh</span></h3>
+                    <p style="color: var(--primary-cyan); font-weight: 600; margin-bottom: 0.5rem; margin-top: 0.5rem; font-size: 0.95rem;">Associate Professor, TU Delft</p>
+                    <a href="mailto:S.vanCranenburgh@tudelft.nl" style="font-size: 0.85rem; color: var(--text-gray); text-decoration: none;">S.vanCranenburgh@tudelft.nl</a>
+                </div>
+                <div class="glass-card" style="width: 280px; text-align: center; padding: 2.5rem; display: flex; flex-direction: column; align-items: center;">
+                    <img src="source/people/Rommert.jpg" alt="Rommert Dekker" style="width: 140px; height: 140px; border-radius: 50%; object-fit: cover; margin-bottom: 1.5rem; border: 3px solid var(--primary-cyan); background-color: white;">
+                    <h3 style="margin-bottom: 0.5rem; line-height: 1.2;"><span style="font-weight: 800; font-size: 1.4rem;">Rommert</span><br><span style="font-weight: 400; font-size: 1.2rem;">Dekker</span></h3>
+                    <p style="color: var(--primary-cyan); font-weight: 600; margin-bottom: 0.5rem; margin-top: 0.5rem; font-size: 0.95rem;">Associate professor, EUR</p>
+                    <a href="mailto:rdekker@ese.eur.nl" style="font-size: 0.85rem; color: var(--text-gray); text-decoration: none;">rdekker@ese.eur.nl</a>
+                </div>
+                <div class="glass-card" style="width: 280px; text-align: center; padding: 2.5rem; display: flex; flex-direction: column; align-items: center;">
+                    <img src="source/people/Dennis.jpg" alt="Dennis Fok" style="width: 140px; height: 140px; border-radius: 50%; object-fit: cover; margin-bottom: 1.5rem; border: 3px solid var(--primary-cyan); background-color: white;">
+                    <h3 style="margin-bottom: 0.5rem; line-height: 1.2;"><span style="font-weight: 800; font-size: 1.4rem;">Dennis</span><br><span style="font-weight: 400; font-size: 1.2rem;">Fok</span></h3>
+                    <p style="color: var(--primary-cyan); font-weight: 600; margin-bottom: 0.5rem; margin-top: 0.5rem; font-size: 0.95rem;">Full professor, EUR</p>
+                    <a href="mailto:dfok@ese.eur.nl" style="font-size: 0.85rem; color: var(--text-gray); text-decoration: none;">dfok@ese.eur.nl</a>
                 </div>
             </div>
+        
+        <div style="margin-top: 6rem; margin-bottom: 3rem; text-align: center;">
+            <h3 style="font-family: 'Inter', sans-serif; font-size: 2rem; color: var(--text-main);"><span data-key="ambassadors_title">Municipal Ambassadors</span></h3>
+            <p style="color: var(--text-gray); margin-top: 0.5rem;"><span data-key="ambassadors_subtitle">Departmental representatives within the municipality.</span></p>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 3rem;">
+            <!-- Kevin -->
+            <div class="glass-card" style="width: 280px; text-align: center; padding: 2.5rem; display: flex; flex-direction: column; align-items: center;">
+                <div style="width: 140px; height: 140px; border-radius: 50%; margin-bottom: 1.5rem; border: 3px solid var(--primary-cyan); background: linear-gradient(45deg, var(--primary-cyan), var(--primary-purple)); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 800; color: white;">KS</div>
+                <h3 style="margin-bottom: 0.5rem; line-height: 1.2;">
+                    <span style="font-weight: 800; font-size: 1.4rem;">Kevin W.</span><br>
+                    <span style="font-weight: 400; font-size: 1.2rem;">Su.</span>
+                </h3>
+                <p style="color: var(--primary-cyan); font-weight: 600; margin-bottom: 0.5rem; margin-top: 0.5rem; font-size: 0.95rem;">Ambassador for Mobility and Transport</p>
+            </div>
+            
+            <!-- Daan -->
+            <div class="glass-card" style="width: 280px; text-align: center; padding: 2.5rem; display: flex; flex-direction: column; align-items: center;">
+                <div style="width: 140px; height: 140px; border-radius: 50%; margin-bottom: 1.5rem; border: 3px solid var(--primary-cyan); background: linear-gradient(45deg, var(--primary-purple), var(--primary-cyan)); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 800; color: white;">DE</div>
+                <h3 style="margin-bottom: 0.5rem; line-height: 1.2;">
+                    <span style="font-weight: 800; font-size: 1.4rem;">Daan</span><br>
+                    <span style="font-weight: 400; font-size: 1.2rem;">Elzen</span>
+                </h3>
+                <p style="color: var(--primary-cyan); font-weight: 600; margin-bottom: 0.5rem; margin-top: 0.5rem; font-size: 0.95rem;">Ambassador for Waste and Resources</p>
+            </div>
+        </div>
+
         </section>
     </main>
 
@@ -71,9 +111,10 @@
         <div class="container text-center">
             <p data-key="footer_partners">Partners</p>
             <div class="partner-logos">
-                <span>TU Delft</span>
-                <span>Erasmus University</span>
-                <span>Gemeente Rotterdam</span>
+                <img src="source/logos/tudelft-logo.png" alt="TU Delft">
+                <img src="source/logos/erasmus-logo.png" alt="Erasmus University">
+                <img src="source/logos/rotterdam-logo.png" alt="Gemeente Rotterdam">
+                <img src="source/logos/convergence-logo.png" alt="Convergence" style="height: 50px;">
             </div>
         </div>
     </footer>

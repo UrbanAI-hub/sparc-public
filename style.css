@@ -1,17 +1,38 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@400;700&display=swap');
 
 :root {
+    /* Light Theme (Default) */
+    --primary-cyan: #00a4cc;
+    --primary-purple: #8a00cc;
+    --bg-color: #f4f9fc;
+    --bg-gradient: radial-gradient(circle at 50% 50%, #ffffff 0%, #e2eff7 100%);
+    --text-main: #1a1a1a;
+    --text-gray: #555555;
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --nav-bg: rgba(255, 255, 255, 0.9);
+    --glow-cyan: 0 0 15px rgba(0, 179, 204, 0.2);
+    --glow-purple: 0 0 15px rgba(153, 0, 204, 0.2);
+    --filter-invert: 0;
+    --hero-bg-opacity: 0.2;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="dark"] {
+    /* Dark Theme */
     --primary-cyan: #00f2ff;
     --primary-purple: #bc00ff;
-    --bg-dark: #0a001a;
-    --bg-darker: #05000d;
-    --text-white: #ffffff;
+    --bg-color: #0a001a;
+    --bg-gradient: radial-gradient(circle at 50% 50%, #1a0033 0%, #0a001a 100%);
+    --text-main: #ffffff;
     --text-gray: #b0b0b0;
     --glass-bg: rgba(255, 255, 255, 0.05);
     --glass-border: rgba(255, 255, 255, 0.1);
+    --nav-bg: rgba(10, 0, 26, 0.8);
     --glow-cyan: 0 0 15px rgba(0, 242, 255, 0.5);
     --glow-purple: 0 0 15px rgba(188, 0, 255, 0.5);
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --filter-invert: 1;
+    --hero-bg-opacity: 0.3;
 }
 
 * {
@@ -22,17 +43,19 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: var(--bg-dark);
-    color: var(--text-white);
+    background-color: var(--bg-color);
+    color: var(--text-main);
     line-height: 1.6;
     overflow-x: hidden;
-    background: radial-gradient(circle at 50% 50%, #1a0033 0%, var(--bg-dark) 100%);
+    background: var(--bg-gradient);
+    transition: var(--transition);
 }
 
 h1,
 h2,
 h3 {
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
     letter-spacing: 2px;
 }
 
@@ -53,12 +76,13 @@ nav {
     top: 0;
     width: 100%;
     z-index: 1000;
-    background: rgba(10, 0, 26, 0.8);
+    background: var(--nav-bg);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--glass-border);
     height: 80px;
     display: flex;
     align-items: center;
+    transition: var(--transition);
 }
 
 nav .container {
@@ -69,11 +93,14 @@ nav .container {
 }
 
 .logo {
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: var(--primary-cyan);
+    display: flex;
+    align-items: center;
     text-decoration: none;
-    text-shadow: var(--glow-cyan);
+}
+
+.logo img {
+    height: 28px;
+    width: auto;
 }
 
 .nav-links {
@@ -84,7 +111,7 @@ nav .container {
 
 .nav-links a {
     text-decoration: none;
-    color: var(--text-white);
+    color: var(--text-main);
     font-size: 0.9rem;
     font-weight: 600;
     text-transform: uppercase;
@@ -99,22 +126,26 @@ nav .container {
 .lang-switch {
     display: flex;
     gap: 0.5rem;
+    align-items: center;
 }
 
-.lang-btn {
+.lang-btn, #theme-toggle {
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
-    color: var(--text-white);
+    color: var(--text-main);
     padding: 5px 10px;
     cursor: pointer;
     border-radius: 4px;
     font-size: 0.8rem;
     transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .lang-btn.active {
     background: var(--primary-cyan);
-    color: var(--bg-dark);
+    color: #fff;
     border-color: var(--primary-cyan);
 }
 
@@ -135,9 +166,10 @@ nav .container {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('/Users/fgarridovalenz/.gemini/antigravity/brain/bed63259-4821-4f34-b5d7-c8e32b743fea/rotterdam_cyber_skyline_1770727489225.png') no-repeat center center/cover;
-    opacity: 0.2;
+    background: url('rotterdam-skyline.png') no-repeat center center/cover;
+    opacity: var(--hero-bg-opacity);
     z-index: -1;
+    transition: var(--transition);
 }
 
 .hero-content h1 {
@@ -147,13 +179,16 @@ nav .container {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 30px rgba(0, 242, 255, 0.3));
+    filter: drop-shadow(0 0 30px rgba(0, 179, 204, 0.3));
 }
 
 .hero-content p {
-    font-size: 1.25rem;
+    font-size: 1.6rem;
     color: var(--text-gray);
-    max-width: 600px;
+    max-width: 800px;
+    font-weight: 300;
+    line-height: 1.4;
+    margin: 0 auto;
     margin: 0 auto;
 }
 
@@ -170,7 +205,7 @@ nav .container {
 
 .glass-card:hover {
     border-color: var(--primary-cyan);
-    box-shadow: 0 0 30px rgba(0, 242, 255, 0.1);
+    box-shadow: 0 0 30px rgba(0, 179, 204, 0.1);
 }
 
 .section-title {
@@ -178,6 +213,7 @@ nav .container {
     margin-bottom: 3rem;
     text-align: center;
     position: relative;
+    color: var(--text-main);
 }
 
 .section-title::after {
@@ -202,14 +238,24 @@ footer {
 .partner-logos {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 4rem;
     margin-top: 2rem;
     opacity: 0.7;
-    filter: grayscale(1) invert(1);
+    filter: grayscale(1) invert(var(--filter-invert));
+    transition: var(--transition);
 }
 
 .partner-logos img {
     height: 40px;
+    object-fit: contain;
+}
+
+.partner-logos span {
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
 }
 
 /* --- Responsive --- */
@@ -220,5 +266,81 @@ footer {
 
     .hero-content h1 {
         font-size: 3rem;
+    }
+}
+
+/* --- New Hero Logo --- */
+.hero-logo {
+    max-width: 80%;
+    width: 600px;
+    height: auto;
+    margin-bottom: 2rem;
+    filter: drop-shadow(0 0 20px rgba(255,255,255,0.2));
+}
+
+/* --- Layout Grid for Vision/Mission --- */
+.vision-mission-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 4rem;
+}
+
+@media (min-width: 768px) {
+    .vision-mission-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .vision-mission-grid > div {
+        margin-top: 0 !important;
+    }
+}
+
+.glass-card p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+
+/* New Project Row Layout */
+.project-row {
+    display: flex;
+    flex-direction: row;
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 0 !important;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+.project-row:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+.project-left {
+    flex: 1;
+    background-size: cover !important;
+    background-position: center !important;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 280px;
+    position: relative;
+}
+.project-right {
+    flex: 1.5;
+    padding: 3rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+@media (max-width: 768px) {
+    .project-row {
+        flex-direction: column;
+    }
+    .project-left {
+        min-height: 200px;
     }
 }

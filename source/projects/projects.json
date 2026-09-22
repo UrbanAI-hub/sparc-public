@@ -1,0 +1,66 @@
+[
+  {
+    "id": "proj_1",
+    "category": "Urban Planning",
+    "title_en": "Exploring perceived urban visual attractiveness for residential choice behavior",
+    "title_nl": "Verkenning van waargenomen stedelijke visuele aantrekkelijkheid bij residentieel keuzegedrag",
+    "desc_en": "This study delves into the intersection between computer vision and discrete choice models to break down how people make housing decisions based on their perception of the environment. Rather than merely identifying which places are generally more attractive, the research isolates and quantifies how each element of an urban visual composition contributes to the final residential decision. This provides urban planners with an empirical tool to design spaces that align with citizens actual valuation.",
+    "desc_nl": "Deze studie verdiept zich in het snijvlak van computer vision en discrete keuzemodellen om te ontrafelen hoe mensen woningkeuzes maken op basis van hun waarneming van de leefomgeving. In plaats van zich te beperken tot het identificeren van welke plekken over het algemeen aantrekkelijker zijn, isoleert en kwantificeert het onderzoek hoe elk afzonderlijk element van een stedelijke visuele compositie bijdraagt aan de uiteindelijke woonkeuze. Dit biedt stedenbouwkundigen en planologen een empirisch instrument om ruimtes te ontwerpen die aansluiten bij de daadwerkelijke waardering van burgers."
+  },
+  {
+    "id": "proj_2",
+    "category": "Urban Planning",
+    "title_en": "Understanding city neighborhood structures based on visual perception",
+    "title_nl": "Inzicht in stedelijke wijkstructuren op basis van visuele waarneming",
+    "desc_en": "This research maps the mental geography of the city by analyzing how individuals interpret urban boundaries through visual stimuli. By understanding where people perceive downtown ends, where a park begins, or what visual similarities connect different neighborhoods, the project reveals the cognitive structures of the city. These findings are essential for designing public policies and infrastructure that respond to the human experience, even helping to mitigate perceptions of spatial inequality.",
+    "desc_nl": "Dit onderzoek brengt de mentale geografie van de stad in kaart door te analyseren hoe individuen stedelijke grenzen interpreteren aan de hand van visuele prikkels. Door te begrijpen waar mensen ervaren dat het centrum ophoudt, waar een park begint of welke visuele overeenkomsten verschillende wijken verbinden, legt het project de cognitieve structuren van de stad bloot. Deze bevindingen zijn van fundamenteel belang voor het ontwerpen van overheidsbeleid en infrastructuur die aansluiten op de menselijke ervaring, en maken het zelfs mogelijk om percepties van ruimtelijke ongelijkheid te verzachten."
+  },
+  {
+    "id": "proj_3",
+    "category": "Mobility",
+    "title_en": "Visual effects on cycling route choice behavior",
+    "title_nl": "Visuele effecten op het routekeuzegedrag van fietsers",
+    "desc_en": "Applying discrete choice models supported by computer vision, this project decodes cyclists preferences when choosing their routes. The analysis focuses on how specific visual features of the environment — such as pavement type, bike lane design, and surrounding infrastructure — encourage or discourage cycling along certain paths. The results provide clear guidelines for developing active mobility networks that are more attractive and tailored to the user experience.",
+    "desc_nl": "Door het toepassen van discrete keuzemodellen ondersteund door computer vision, ontcijfert dit project de voorkeuren van fietsers bij het bepalen van hun route. De analyse richt zich op hoe specifieke visuele kenmerken van de omgeving, zoals het type wegdek, het ontwerp van fietspaden en de omliggende infrastructuur, het fietsen langs bepaalde routes stimuleren of juist ontmoedigen. De resultaten bieden duidelijke richtlijnen voor het ontwikkelen van actieve mobiliteitsnetwerken die aantrekkelijker zijn en beter aansluiten op de gebruikerservaring."
+  },
+  {
+    "id": "proj_4",
+    "category": "Real Estate",
+    "title_en": "Visual urban space effects on real estate pricing",
+    "title_nl": "Effecten van de visuele stedelijke ruimte op vastgoedprijzen",
+    "desc_en": "This study quantifies the financial impact of urban aesthetics, evaluating how different visual components of public space directly influence property sales prices. By measuring market reaction to visual amenities such as the presence of parks, street conditions, and architectural quality, the project demonstrates the tangible economic weight of visual perception. This information is key to justifying public investments in urban improvements and understanding real estate dynamics.",
+    "desc_nl": "Deze studie kwantificeert de financiele impact van stedelijke esthetiek door te evalueren hoe verschillende visuele componenten van de openbare ruimte de verkoopprijzen van vastgoed direct beinvloeden. Door de reactie van de markt op visuele voorzieningen zoals de aanwezigheid van parken, de staat van de straten en architectonische kwaliteit te meten, toont het project het tastbare economische gewicht van visuele waarneming aan. Deze informatie is essentieel om publieke investeringen in stedelijke vernieuwing te rechtvaardigen en vastgoeddynamieken te begrijpen."
+  },
+  {
+    "id": "proj_5",
+    "category": "City Services",
+    "title_en": "Predicting deployment of cleaning services",
+    "title_nl": "Voorspellen van de inzet van reinigingsdiensten",
+    "desc_en": "Addressing the issue of waste accumulation outside containers (bijplaatsing) in the Netherlands, this project develops a predictive system for waste management. By assessing the severity of accumulation at different locations, the model optimizes truck routing and staff allocation. This enables a shift toward a dynamic collection model based on actual urgency, maximizing the efficiency of logistical resources and ensuring streets remain in optimal condition.",
+    "desc_nl": "Met het oog op het probleem van afvalbijplaatsing naast containers in Nederland ontwikkelt dit project een voorspellend systeem voor afvalbeheer en reiniging. Door de ernst van de afvalophoping op verschillende locaties te beoordelen, optimaliseert het model de routes van reinigingswagens en de personeelsinzet. Dit maakt een overgang mogelijk naar een dynamisch inzamelmodel op basis van actuele urgentie, waardoor de efficientie van logistieke middelen wordt gemaximaliseerd en schone straten worden gewaarborgd."
+  },
+  {
+    "id": "proj_6",
+    "category": "Safety",
+    "title_en": "Effect of environment and behavior at intersections on safety",
+    "title_nl": "Invloed van omgeving en gedrag op kruispunten op de veiligheid",
+    "desc_en": "This project aims to scale up safety evaluations at road intersections, a task traditionally reliant on manual inspections. By training computer vision models with expert data and criteria, the tool classifies the risk level of different streets based on their physical characteristics. This accelerates the identification of critical hotspots and provides actionable insights to implement design interventions that effectively protect road users.",
+    "desc_nl": "Dit project heeft als doel de veiligheidsbeoordeling van kruispunten op te schalen, een taak die traditioneel afhankelijk is van handmatige inspecties. Door computer vision-modellen te trainen met data en criteria van experts, classificeert de tool het risiconiveau van verschillende straten op basis van hun fysieke kenmerken. Dit versnelt de identificatie van risicolocaties en levert bruikbare informatie op voor ontwerpingrepen die weggebruikers effectief beschermen."
+  },
+  {
+    "id": "proj_7",
+    "category": "Infrastructure",
+    "title_en": "Optimization of planning replacement for sewage and road infrastructure",
+    "title_nl": "Optimalisatie van de vervangingsplanning voor riool- en weginfrastructuur",
+    "desc_en": "This research addresses the logistical challenge of maintaining interdependent urban assets while minimizing disruptions to citizens. Using advanced data preparation and optimization models, the project synchronizes underground sewer network replacement with surface repaving. By cross-referencing the end-of-life dates of both systems, joint interventions are scheduled to avoid tearing up the same street multiple times, saving public funds and reducing traffic disruptions.",
+    "desc_nl": "Dit onderzoek pakt de logistieke uitdaging aan van het onderhoud van onderling afhankelijke stedelijke activa met minimale overlast voor burgers. Met behulp van geavanceerde modellen voor datavoorbereiding en -optimalisatie synchroniseert het project de vervanging van het ondergrondse rioolnetwerk met de bovengrondse bestrating. Door de levensduur van beide systemen te combineren, worden gezamenlijke werkzaamheden gepland die voorkomen dat dezelfde straat meerdere keren moet worden opengebroken, wat overheidsbudgetten bespaart en verkeershinder vermindert."
+  },
+  {
+    "id": "proj_8",
+    "category": "Infrastructure",
+    "title_en": "Computer vision for urban asset management",
+    "title_nl": "Computer vision voor het beheer van stedelijke activa",
+    "desc_en": "Complementing public space management, this study deploys computer vision to automate the inspection of street furniture and waste containers. Using ground-level imagery captured by vehicles, the model automatically classifies asset condition and detects anomalies. This eliminates reliance on in-person human inspections, which are often slow or prone to bias, providing urban managers with continuous, accurate monitoring of the city.",
+    "desc_nl": "Als aanvulling op het beheer van de openbare ruimte zet deze studie computer vision in om de inspectie van straatmeubilair en afvalcontainers te automatiseren. Aan de hand van beelden die worden vastgelegd door voertuigen in het veld, classificeert het model automatisch de staat van de activa en detecteert het afwijkingen. Dit maakt een einde aan de afhankelijkheid van fysieke inspecties door mensen, die vaak traag of bevooroordeeld zijn, waardoor stadsbeheerders kunnen beschikken over een continue en nauwkeurige monitoring van de stad."
+  }
+]
