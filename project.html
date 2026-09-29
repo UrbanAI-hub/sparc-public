@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Details | SPARC</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=2">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
     <nav>
@@ -33,15 +34,17 @@
             <p id="project-desc" style="color: var(--text-gray); font-size: 1.15rem; margin-bottom: 3rem; line-height: 1.6;"></p>
             
             <!-- Project image -->
-            <div id="project-image" style="width: 100%; height: 400px; background: url('rotterdam-skyline.png') no-repeat center center/cover; border-radius: 20px; margin-bottom: 3rem; border: 1px solid var(--glass-border); box-shadow: 0 10px 30px rgba(0,0,0,0.1); opacity: 0.9;"></div>
+            <img id="project-image" style="width: 100%; max-height: 600px; object-fit: contain; margin-bottom: 2rem; border-radius: 12px; display: none;">
             
             <!-- Extended details -->
             <div class="glass-card" style="min-height: 300px; padding: 3rem;">
-                <h3 style="color: var(--text-main); margin-bottom: 1rem;" data-key="project_details_title">Project Details</h3>
-                <div id="project-details">
+                <h3 style="color: var(--text-main); margin-bottom: 1rem;" data-key="project_details_title">Project Details</h3>                <div id="project-details" class="markdown-body">
                     <p style="color: var(--text-gray);"><em>Detailed information, methodologies, and outcomes for this project will be added here soon...</em></p>
                 </div>
-            </div>
+                
+                <!-- External Resources Container -->
+                <div id="external-resources" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(128, 128, 128, 0.2); display: none;">
+                </div>            </div>
         </div>
     </main>
 
@@ -80,8 +83,38 @@
                     function renderProject() {
                         lang = localStorage.getItem("sparc_lang") || "en";
                         document.getElementById("project-title").textContent = project["title_" + lang];
-                        document.getElementById("project-desc").textContent = project["desc_" + lang];
+                        // document.getElementById("project-desc").textContent = project["desc_" + lang];
                         document.title = project["title_" + lang] + " | SPARC";
+
+                        // Handle external resources
+                        var extRes = document.getElementById("external-resources");
+                        if (project.paper_url && project.paper_url.trim() !== "") {
+                            var titleRes = lang === 'en' ? 'External Resources' : 'Externe Bronnen';
+                            var descText = lang === 'en' ? 'If you want to dive deeper into the methodology and detailed results, you can access the full scientific publication below:' : 'Als u meer wilt weten over de methodologie en de gedetailleerde resultaten, kunt u hieronder de volledige wetenschappelijke publicatie raadplegen:';
+                            var btnText = lang === 'en' ? 'Read Full Paper' : 'Lees het volledige onderzoek';
+                            
+                            extRes.innerHTML = '<h3 style="color: var(--primary-cyan); font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 700;">' + titleRes + '</h3>' +
+                                               '<p style="color: var(--text-gray); margin-bottom: 1.5rem; line-height: 1.6; font-size: 1.05rem;">' + descText + '</p>' +
+                                               '<a href="' + project.paper_url + '" target="_blank" style="display: inline-block; padding: 12px 24px; background-color: var(--primary-cyan); color: #fff; text-decoration: none; border-radius: 8px; font-weight: 600; transition: opacity 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">🔗 ' + btnText + '</a>';
+                            extRes.style.display = "block";
+                        } else {
+                            extRes.style.display = "none";
+                        }
+
+                        
+                        // Fetch the details markdown file
+                        var mdFile = "source/projects/" + projectId + "/details_" + lang + ".md";
+                        fetch(mdFile)
+                            .then(function(response) {
+                                if (response.ok) return response.text();
+                                throw new Error("Details not found");
+                            })
+                            .then(function(text) {
+                                document.getElementById("project-details").innerHTML = marked.parse(text);
+                            })
+                            .catch(function(error) {
+                                document.getElementById("project-details").innerHTML = "<p><em>Details coming soon...</em></p>";
+                            });
                     }
 
                     renderProject();
@@ -89,8 +122,9 @@
                     // Check for project-specific image
                     var img = new Image();
                     img.onload = function() {
-                        document.getElementById("project-image").style.background = 
-                            "url('source/projects/" + projectId + "/image.png') no-repeat center center/cover";
+                        var el = document.getElementById("project-image");
+                        el.src = img.src;
+                        el.style.display = "block";
                     };
                     img.src = "source/projects/" + projectId + "/image.png";
 
