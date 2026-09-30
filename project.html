@@ -102,20 +102,30 @@
                         }
 
                         
-                        // Fetch the details markdown file
-                        var mdFile = "source/projects/" + projectId + "/details_" + lang + ".md";
-                        fetch(mdFile)
-                            .then(function(response) {
-                                if (response.ok) return response.text();
-                                throw new Error("Details not found");
-                            })
-                            .then(function(text) {
-                                document.getElementById("project-details").innerHTML = marked.parse(text);
-                            })
-                            .catch(function(error) {
-                                document.getElementById("project-details").innerHTML = "<p><em>Details coming soon...</em></p>";
-                            });
-                    }
+                        
+                        
+                        if (project.status === "ongoing") {
+                            var statusTitle = lang === 'en' ? "🚧 <strong>On-Going Project:</strong> " : "🚧 <strong>Lopend Project:</strong> ";
+                            var statusMsg = lang === 'en' ? "This project is currently active and under development. Findings and detailed methodologies will be published here upon completion." : "Dit project is momenteel actief en in ontwikkeling. Resultaten en gedetailleerde methodologieën zullen hier na voltooiing worden gepubliceerd.";
+                            var desc = project["desc_" + lang];
+                            document.getElementById("project-details").innerHTML = "<div style='font-size: 1.1rem; line-height: 1.6;'><p style='color: var(--primary-purple); margin-bottom: 1.5rem;'>" + statusTitle + statusMsg + "</p><p style='color: var(--text-gray);'>" + desc + "</p></div>";
+                        } else {
+
+                            // Fetch the details markdown file
+                            var mdFile = "source/projects/" + projectId + "/details_" + lang + ".md";
+                            fetch(mdFile)
+                                .then(function(response) {
+                                    if (response.ok) return response.text();
+                                    throw new Error("Details not found");
+                                })
+                                .then(function(text) {
+                                    document.getElementById("project-details").innerHTML = marked.parse(text);
+                                })
+                                .catch(function(error) {
+                                    document.getElementById("project-details").innerHTML = "<p><em>Details coming soon...</em></p>";
+                                });
+                        }
+}
 
                     renderProject();
 
