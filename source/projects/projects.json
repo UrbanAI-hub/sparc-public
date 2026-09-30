@@ -24,7 +24,7 @@
     "title_nl": "Visuele effecten op het routekeuzegedrag van fietsers",
     "desc_en": "Applying discrete choice models supported by computer vision, this project decodes cyclists preferences when choosing their routes. The analysis focuses on how specific visual features of the environment — such as pavement type, bike lane design, and surrounding infrastructure — encourage or discourage cycling along certain paths. The results provide clear guidelines for developing active mobility networks that are more attractive and tailored to the user experience.",
     "desc_nl": "Door het toepassen van discrete keuzemodellen ondersteund door computer vision, ontcijfert dit project de voorkeuren van fietsers bij het bepalen van hun route. De analyse richt zich op hoe specifieke visuele kenmerken van de omgeving, zoals het type wegdek, het ontwerp van fietspaden en de omliggende infrastructuur, het fietsen langs bepaalde routes stimuleren of juist ontmoedigen. De resultaten bieden duidelijke richtlijnen voor het ontwikkelen van actieve mobiliteitsnetwerken die aantrekkelijker zijn en beter aansluiten op de gebruikerservaring.",
-    "paper_url": ""
+    "paper_url": "https://www.sciencedirect.com/science/article/pii/S0965856426004155"
   },
   {
     "id": "proj_4",
