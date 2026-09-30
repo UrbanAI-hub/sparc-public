@@ -51,7 +51,7 @@
     "title_nl": "Invloed van omgeving en gedrag op kruispunten op de veiligheid",
     "desc_en": "This project aims to scale up safety evaluations at road intersections, a task traditionally reliant on manual inspections. By training computer vision models with expert data and criteria, the tool classifies the risk level of different streets based on their physical characteristics. This accelerates the identification of critical hotspots and provides actionable insights to implement design interventions that effectively protect road users.",
     "desc_nl": "Dit project heeft als doel de veiligheidsbeoordeling van kruispunten op te schalen, een taak die traditioneel afhankelijk is van handmatige inspecties. Door computer vision-modellen te trainen met data en criteria van experts, classificeert de tool het risiconiveau van verschillende straten op basis van hun fysieke kenmerken. Dit versnelt de identificatie van risicolocaties en levert bruikbare informatie op voor ontwerpingrepen die weggebruikers effectief beschermen.",
-    "paper_url": ""
+    "paper_url": "https://repository.tudelft.nl/record/uuid:c2828798-b693-432d-907d-a45a07059c63"
   },
   {
     "id": "proj_7",
