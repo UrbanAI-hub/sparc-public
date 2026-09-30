@@ -1,0 +1,821 @@
+When Trash Brings Trash
+Modeling the Wicked Problem of naastplaatsing in Rotterdam
+When Trash Brings Trash
+MSc Thesis
+Author:
+Claudio Prosperini
+First Supervisor:
+Dr.ir. Sander Van Cranenburgh
+Second Supervisor:
+Dr.ir. Petra Heijnen
+External Supervisor:
+Daan Van Den Elzen
+Programme:
+Engineering and Policy Analysis
+University:
+Technische Universiteit Delft
+Date:
+March 30th 2026
+Executive Summary
+This thesis investigates whether the phenomenon of naastplaatsing, the improper disposal
+of municipal solid waste next to municipal containers, can be modeled to understand its
+root causes and to improve the operational response of the Departmente of Waste Manage-
+ment (Stadsbeheer) of the Municipality of Rotterdam. Combining stakeholder mapping,
+multivariate data analysis (MVDA), machine learning (ML), and heuristic routing, the
+study provides a comprehensive analysis of one of Rotterdam’s most persistent urban
+challenges.
+Figure 1: Naastplaatsing in Rotterdam (Gemeente Rotterdam, J. Boute, 2023)
+Rotterdam faces a rapidly growing challenge with naastplaatsing. Residents increasingly
+describe waste accumulations around containers as a major nuisance, contributing to un-
+healthy residues, degraded streetscapes, and declining confidence in municipal services.
+NietRnaast (nRn), the city’s dedicated response team, handles hundreds of thousands of
+incidents annually; these are all recorded as administrative actions detailing the type of
+waste detected (if any), the amount of waste, the time of the intervention, and sometimes
+a picture of the container(s) with waste. Still, structural pressures (population density,
+container malfunctions) and behavioral dynamics (“waste attracts waste”) continue to
+reinforce the phenomenon.
+A theoretical framework of naastplaatsing is constructed drawing on expert interviews,
+field observations, and prior research. The framework identifies two core mechanisms that
+i
+shape naastplaatsing: operational triggers, such as container malfunctions, overflow, and
+service delays, and behavioral feedback loops, most notably the “trash brings trash” ef-
+fect, which means that visible waste further normalizes improper disposal. A stakeholder
+mapping exercise reveals a structural misalignment in Stadsbeheer’s decision arena. The
+actors who generate the problem (perpetrators) hold high behavioral influence but low
+interest in solving it. Conversely, high-interest actors like residents, container adopters,
+and NietRnaast workers exhibit limited power. Strategic decision-makers (the alderman,
+Stadsbeheer managers) must balance a delicate trade-off between operational efficiency
+and behavioral deterrence, making naastplaatsing a wicked problem.
+The analysis of the current NietRnaast setup reveals that certain functionalities of the
+tools utilized by drivers and pickers in their daily operations have detrimental effects
+on their efficiency, as well as negative implications on data quality. NietRnaast drivers
+have too many categories from which they can choose from when describing their ad-
+ministrative actions, leading them to often default to the more general categories out
+of convenience. Furthermore, their access to picture mode is tied to a report of actual
+naastplaatsing, meaning that they are not able to photograph containers that are clean.
+This has caused drivers to misreport the situation of some containers.
+Figure 2: Naastplaatsing in Rotterdam (Gemeente Rotterdam, J. Boute, 2023)
+A statistical analysis of factors at the neighborhood level validates some mechanisms
+of the theoretical framework. Operational impediments, especially container malfunc-
+tions, show a consistent and positive correlation with naastplaatsing rates. Demographic
+composition (notably the share of non-EU residents) also correlates positively. Other hy-
+pothesized drivers (prosperity, structural load, social cohesion) appear weaker or highly
+context-dependent. MVDA helps distinguish robust predictors from weaker ones; still,
+its linear structure limits its ability to capture behavioral feedback loops and completely
+explain the theoretical framework.
+Tree-based ML models are trained to predict the naastplaatsing risk at the container clus-
+ter level, achieving high predictive accuracy (R2 ≈0.93–0.95). SHAP-based interpretabil-
+ity reveals that naastplaatsing is strongly self-reinforcing: clusters that have experienced
+it recently are far more likely to experience it again. Operational conditions (malfunc-
+tions, waste type, fill dynamics) and temporal patterns also shape risk. These insights
+extend the MVDA, showing that naastplaatsing emerges from the interaction of historical
+behavior, operational pressures, temporal patterns, and container characteristics.
+ii
+A heuristic routing study shows that the collection process can be made substantially
+more efficient. Alternative routes are calculated with 5 different algorithms (heuristics),
+which in some cases use the prediction outputs of the ML models to inform their choice
+in the selection of the cluster sequence. Their evaluation is carried out over performance
+metrics that reflect the trade-off identified by the strategic stakeholders between collec-
+tion efficiency and quality. Purely distance-based heuristics reduce travel time but ignore
+behavioral relevance; conversely, purely risk-based heuristics prioritize problematic con-
+tainers at the cost of longer routes. Hybrid heuristics balance both metrics, with the
+ratio heuristic consistently outperforms actual NietRnaast routes on both distance and
+collection penalty; this demonstrates that efficiency and service quality need not be in
+conflict.
+The research identifies three key areas for policy intervention:
+• Routing that Works
+ML predictions and routing tools, co-designed with NietRnaast drivers, should be
+integrated in the departments workflow to increase the efficiency of the collection
+of naastplaatsing. Optimized routes can help with reducing costs, and ML-derived
+risk scores can reduce the amount of container clusters to visit.
+• Behavior that Shifts
+A selectively fast and selectively slow strategy can address hotspots quickly in
+order to reduce the multiplying effect of naastplaatsing, while simultaneously re-
+ducing convenience for repeat offenders in low-risk, low-visibility areas. Targeted
+Handhaving presence enhances deterrence.
+• Mind the Gap
+A structural disconnect exists between strategic planning and operational reality.
+Improving feedback loops, including drivers in tool design, and embedding collabo-
+rative workflows are prerequisites for the successful addressing of a wicked problem
+like naastplaatsing.
+While Stadsbeheer cannot directly resolve the socio-economic drivers behind naastplaats-
+ing, it can shape the environmental conditions that determine whether those drivers man-
+ifest. By combining stakeholder insight, MVDA, interpretable ML, and routing optimiza-
+tion, this thesis shows that naastplaatsing is modelable, predictable, and operationally
+actionable. The challenge ahead is the organizational integration of these insights into a
+proactive and inclusive waste management strategy.
+iii
+Acknowledgements
+Writing this thesis has been a challenging and rewarding journey. I learned what it
+means to conduct research, developing a project from beginning to end in (mostly) un-
+charted waters. This has been an invaluable opportunity for personal growth, and a great
+send-off for my academic career.
+First and foremost, I would like to thank all the members of my graduation committee.
+I am extremely grateful to Sander, my first supervisor and chair, for coordinating this
+committee, providing critical, relevant, and timely feedback, and keeping me on the right
+track throughout this whole process. The advice you gave me in July, to wait for the
+Municipality to embark on my thesis, was the best you could have given me. I am also
+greatly thankful to Petra, my second supervisor, for all of her contributions to this the-
+sis, especially the routing methodologies; we got there in the end, even with the Convex
+Insertion heuristic. Last but not least, I am deeply grateful to Daan, my external super-
+visor. Your stakeholder perspective on this project has been invaluable, and your active
+involvement has given me plenty of motivation to move forward. I am glad we will keep
+working together in the near future; hopefully, there are great things to come.
+A special thanks goes to the people of Stadsbeheer that worked with and around me
+during these months. To anyone who helped me gather data, took part in the interviews,
+or played some table soccer with to blow some steam off: thank you for being part of this
+process. I am glad to now call you my colleagues.
+I could not have undertaken this journey without the support of my family. You have
+put up with me at my lowest points, when I was doubtful and dejected. I am so glad I
+get to share this milestone with you all; I know some of you have been waiting for this
+day even longer than I have. To my girlfriend in particular, I want to say thank you for
+making it on the day of the defense.
+Finally, thanks should also go to all my friends scattered between Italy and the Nether-
+lands. If any of you ever got an earful about my thesis and naastplaatsing: I’m sorry,
+and thank you for bearing with me. I promise not to talk about this again for at least a
+little while.
+iv
+Contents
+Executive Summary
+i
+Acknowledgements
+iv
+1
+Introduction
+1
+1.1
+Naastplaatsing
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+1
+1.2
+Knowledge Gap . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3
+1.3
+Research Objectives . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+4
+1.4
+Thesis outline . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5
+2
+Literature Review
+6
+2.1
+Core Concepts . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+6
+2.1.1
+AI and IoT in Urban Waste Management . . . . . . . . . . . . . .
+6
+2.1.2
+Statistical and Spatial Analysis in Waste Management
+. . . . . .
+7
+2.1.3
+Machine Learning in Waste Management . . . . . . . . . . . . . .
+7
+2.1.4
+Routing Heuristics in Waste Management
+. . . . . . . . . . . . .
+9
+2.1.5
+Behavioral Drivers of Illegal Dumping . . . . . . . . . . . . . . . .
+10
+2.1.6
+Illegal Dumping in the City of Rotterdam
+. . . . . . . . . . . . .
+10
+2.2
+Conclusion of Literature Review . . . . . . . . . . . . . . . . . . . . . . .
+11
+3
+Background
+13
+3.1
+Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+13
+3.2
+Datasets . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+13
+3.2.1
+NietRnaast
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+13
+3.2.2
+Central Bureau voor de Statistiek . . . . . . . . . . . . . . . . . .
+14
+3.2.3
+Onderzoek 010
+. . . . . . . . . . . . . . . . . . . . . . . . . . . .
+14
+3.2.4
+Waste Vision
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+15
+3.2.5
+GIS
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+15
+3.3
+Domain Knowledge . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+15
+3.3.1
+Literature Review . . . . . . . . . . . . . . . . . . . . . . . . . . .
+15
+3.3.2
+Expert Interviews . . . . . . . . . . . . . . . . . . . . . . . . . . .
+19
+3.3.3
+On-Field Experience . . . . . . . . . . . . . . . . . . . . . . . . .
+23
+3.4
+Theoretical Framework . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+25
+3.4.1
+Theoretical Framework Analysis . . . . . . . . . . . . . . . . . . .
+25
+3.4.2
+Hypotheses Formulation . . . . . . . . . . . . . . . . . . . . . . .
+27
+v
+4
+Methodology
+29
+4.1
+Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+29
+4.2
+Factor Analysis . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+31
+4.3
+Predictive Modeling . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+32
+4.4
+Routing Study . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+34
+4.4.1
+Toy Problem
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+38
+5
+Results
+44
+5.1
+Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+44
+5.2
+Factor Analysis . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+44
+5.2.1
+2022 model
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+45
+5.2.2
+2023 model
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+48
+5.2.3
+Model Comparison . . . . . . . . . . . . . . . . . . . . . . . . . .
+49
+5.3
+Predictive Modeling . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+50
+5.3.1
+Tree Models . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+50
+5.3.2
+Individual SHAP visualizations
+. . . . . . . . . . . . . . . . . . .
+53
+5.4
+Routing Study . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+55
+6
+Discussion
+59
+6.1
+Research Objectives . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+59
+6.2
+Policy Recommendations . . . . . . . . . . . . . . . . . . . . . . . . . . .
+64
+6.2.1
+Routing that Works
+. . . . . . . . . . . . . . . . . . . . . . . . .
+64
+6.2.2
+Behavior that Shifts
+. . . . . . . . . . . . . . . . . . . . . . . . .
+64
+6.2.3
+Mind the Gap . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+65
+6.3
+Limitations
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+65
+6.4
+Future Work . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+66
+7
+Conclusion
+68
+References
+70
+A Supplementary Tables
+74
+A.1 Interview Participants
+. . . . . . . . . . . . . . . . . . . . . . . . . . . .
+74
+A.2 OLS Regression Variables
+. . . . . . . . . . . . . . . . . . . . . . . . . .
+75
+A.3 ML Variables
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+76
+A.4 Toy Cluster-Level Risk Predictions
+. . . . . . . . . . . . . . . . . . . . .
+77
+A.5 Collection Penalty Scoring System . . . . . . . . . . . . . . . . . . . . . .
+78
+B Model Specifications
+79
+B.0.1
+Decision Tree . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+79
+B.0.2
+Random Forest . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+79
+B.0.3
+Gradient Boosting
+. . . . . . . . . . . . . . . . . . . . . . . . . .
+79
+B.0.4
+Hyperparameters . . . . . . . . . . . . . . . . . . . . . . . . . . .
+80
+C Additional Figures
+81
+C.1 SHAP Summary of Decision Tree regressor . . . . . . . . . . . . . . . . .
+81
+C.2 Routing Average Performance per Neighborhood . . . . . . . . . . . . . .
+82
+vi
+Chapter 1
+Introduction
+Industrialization and population growth have resulted in unprecedented levels of solid
+waste production worldwide. According to Kaza et al. (2018), the amount of solid waste
+generated in municipal areas is expected to grow from 2.01 billion tons in 2016 to 3.4
+billion tons by 2050. Around the world, waste generation volumes fluctuate widely be-
+tween 0.11 and 4.54 kgs per capita per day. Such variation is generally correlated with
+income levels and urbanization rates. Traditional waste collection systems are often built
+on fixed schedules and manual monitoring, which can lead to undesirable outcomes: trash
+containers overfilling, service vehicles running unoptimized routes, and illegal dumping
+in underserved areas.
+As cities become increasingly data-rich, digital technologies and geo-referenced informa-
+tion provide new opportunities for understanding and optimizing waste-related challenges.
+However, many urban waste problems remain insufficiently understood, in particular
+those driven not only by infrastructural constraints, but also by behavioral dynamics.
+1.1
+Naastplaatsing
+Naastplaatsing is one of the most pressing challenges facing the Stadsbeheer department
+of the Municipality of Rotterdam. The term refers to the improper disposal of waste
+next to any one of the over 3000 municipal containers in the city of Rotterdam. The
+phenomenon corresponds to what national waste organizations classify as illegal dumping:
+the placement of bags, boxes, bulky items, or other household waste beside a container
+rather than inside it (“Bijplaatsingen”, 2023). According to the NVRD Household Waste
+Benchmark, 92% of (participating) Dutch municipalities are confronted with the issue of
+naastplaatsing to varying degrees (“Bijplaatsingen”, 2023).
+1
+Figure 1.1: Naastplaatsing in Rotterdam (Gemeente Rotterdam, J. Boute, 2023)
+This concerningly growing phenomenon is a recognized issue in the city of Rotterdam,
+with the percentage of residents considering naastplaatsing a relevant nuisance increasing
+from 37% in 2014 to 56% in 2020 (Epskamp & De Vries, 2020). In 2018 NietRnaast, a
+joint operation between the 3 operative departments of Stadsbeheer (Reining, Inzamel-
+ing, and Handhaving), was created with the objective of addressing naastplaatsing with a
+bottom-up approach. A number of crews canvass municipal containers and clear them of
+any waste that is improperly disposed of; initially this was restricted to a select area (the
+Delfshaven wijk), and it later spread to most neighborhoods in the city. The NietRnaast
+crews record data on each of the administrative actions they carry out on the municipal
+containers since 2021.
+This effort to combat naastplaatsing imposes additional operational costs on waste dis-
+posal municipal services. Furthermore, each case of naastplaasting contributes to eroding
+public trust in waste systems, often discouraging proper waste usage among the rest of
+the population: ”waste attracts waste”, an application of the Broken Window behav-
+ioral theory (“Het veelkoppige afvalmonster: waarom boetes alleen de stad niet schoon
+krijgen”, 2025). Local reporting illustrates the extent of resident frustration, with news
+outlets repeatedly documenting overflowing containers and torn bags, resulting in a rapid
+deterioration of public spaces. In Kralingen-Crooswijk, residents described naastplaats-
+ing as a “domino effect”, with delays in emptying containers triggering further dumping
+and subsequent hygiene problems (“Rotterdammers zijn afvaloverlast beu”, 2019). Simi-
+lar frustrations surface across the city, where residents frequently call for a more involved
+Handhaving department and more reliable container emptying by Inzameling.
+Figure 1.2: Naastplaatsing in Rotterdam (Gemeente Rotterdam, P. Gooris, 2023)
+2
+Even interventions intended to reduce naastplaatsing can provoke new tensions. In 2024,
+Stadsbeheer removed underground containers on Josephlaan in the Oude Westen neigh-
+borhood. This was the result of persistent naastplaatsing complaints, with neighboring
+containers expected to absorb the waste. Residents expressed strong concerns about ac-
+cessibility, communication, and the likelihood of increased dumping in surrounding streets
+(“Containers verdwijnen uit Josephlaan: zo gooien mensen het ernaast en komen er rat-
+ten”, 2024). Situations like this demonstrate how infrastructural adjustments can impact
+both the operational burden and behavioral responses, sometimes with unintended ef-
+fects.
+Persistent naastplaatsing is also reflected in citywide statistics. In neighborhoods such
+as Hillesluis, Carnisse, and Middelland, surveys indicate that more than 80% of residents
+experience nuisance from waste next to containers (“Hillesluis ervaart afvaloverlast het
+ergst”, 2021). Municipal counselors have raised questions about business waste misuse,
+insufficient paper container capacity, and the capacity of Stadsbeheer to deal with full or
+broken containers. Calls for the deployment of sensors for improved monitoring reflect
+the operational pressures associated with managing overflowing or blocked containers.
+National Dutch media also portrays naastplaatsing as a growing and expensive issue. A
+2023 investigation by Pointer found that large cities in the Netherlands spend millions an-
+nually cleaning up naastplaatsing, with Rotterdam’s NietRnaast crews alone addressing
+more than 660,000 incidents in a single year (“Vuil naast containers kost steden miljoe-
+nen, maar blijft zich opstapelen”, 2023). Despite these investments, cities report that
+naastplaatsing continues to rise. Officials in multiple municipalities describe the issue as
+a “persistent and difficult-to-solve problem.”
+In response, Rotterdam has experimented with behavioral interventions. One recent ex-
+ample includes video projections of rats near chronic hotspots, meant as a deterrent for
+resident in an attempt to draw residents’ attention to the hygiene consequences of leaving
+bags next to containers (“Gemeente waarschuwt voor afval naast de container door beel-
+projectie”, 2026). These actions reflect the broader principle that “waste attracts waste,”
+and that both environmental cues and operational conditions shape resident behaviour.
+1.2
+Knowledge Gap
+The issue of illegal dumping is tackled in a multitude of ways, and behavioral research
+is also beginning to utilize quantitative analysis to support its claims. However, while a
+variety of analysis techniques have been employed to analyze illegal dumping, there is no
+perfect match for the specific issue of naastplaatsing in Rotterdam. More often than not,
+the research is not focusing on a purely urban context; when it does, illegal dumping is
+not entirely comparable to naastplaatsing due to the characteristics of the phenomenon.
+Placing waste ”next to” bins is not the same as actively looking for secluded, under-
+monitored areas where to dispose of inconvenient waste.
+The phenomenon of naastplaatsing, is not as extensively researched as illegal dumping is.
+The goal of this study is to utilize the many tools enabled by the availability of data not
+just to predict, but also to understand why the problem of naastplaatsing is growing by
+identifying its key drivers. Furthermore, little work has addressed how predictive outputs
+can be linked to practical municipal interventions, which is among the key goals of this
+thesis.
+3
+1.3
+Research Objectives
+The objective of this research is to model the phenomenon of naastplaatsing. This thesis’
+research question is thus:
+Can the phenomenon of naastplaatsing in Rotterdam be modeled to un-
+derstand its root causes and efficientize the response to address it?
+The goals of this comprehensive analysis are articulated as follows:
+• Identify the most relevant stakeholders involved in the decision arena of naastplaats-
+ing and their differing levels of involvement and power.
+• Understand the factors that influence the occurrence of naastplaatsing in different
+areas of Rotterdam.
+• Predict the likelihood of naastplaatsing happening at the level of individual con-
+tainers based on their characteristics historical record of naastplaatsing instances.
+• Formulate an approach to optimize the allocation of cleaning resources and improve
+the efficiency of the naastplaatsing collection process.
+These research objectives are addressed by the following sub-questions:
+1) Who are the most relevant stakeholders in the decision arena of the naastplaatsing
+problem, and what are their objectives?
+A theoretical framework of the naastplaatsing problem is formulated with domain knowl-
+edge, which is acquired by combining multiple streams of information: relevant literature
+and research, informal interviews with Stadsbeheer experts, and on-field experience with
+NietRnaast operators. The insights from the theoretical framework are to build a uni-
+fying representation of the decision arena, the analysis of which can further inform the
+current understanding of the naastplaatsing phenomenon.
+2) Can MVDA techniques be utilized to validate the findings and hypotheses of the naast-
+plaatsing theoretical framework?
+To evaluate the insights gained with the qualitative analysis of naastplaatsing a statistical
+model at the neighborhood level of it is developed. The specific goal is to understand
+if the predictors that have been found to be relevant through the framework are simi-
+larly impactful according to the data. Data analysis techniques like PCA and OLS-R
+are utilized on datasets that contain demographic and socio-economic information on the
+neighborhoods of Rotterdam.
+3) Can ML algorithms be employed to model naastplaatsing in Rotterdam to a satis-
+fying level of prediction accuracy and result explainability?
+Heterogeneous data from multiple sources is utilized to train a variety of models, simi-
+larly to how Geng et al. (2024) compare different ML algorithms, starting from a simple
+baseline. Tree models, such as Decision Trees, Random Forest, and Gradient Boosting
+regressors, are particularly well suited for modeling naastplaatsing since they can capture
+the non-linear relationships characteristic of waste management processes. These models
+also integrate with explainability techniques like feature importance ranking and SHAP
+4
+(SHapley Additive exPlanation), which are applied to the trained ML models in order to
+evaluate them based on performance and interpretability.
+4) Can the collection process of naastplaatsing be made more efficient?
+The routes that nRn crews follow for the collection of improperly disposed waste are not
+dictated by any algorithm. The Municipality of Rotterdam has access to the fill levels
+through its WasteVision (WV) system, and the outputs of the best performing ML model
+could inform the routing algorithm to distribute cleaning shift in different areas of Rot-
+terdam more efficiently. The ML model assigns to each waste container a naastplaatsing
+risk score, which is used to build routes based on simple, interpretable heuristics to define
+the sequence of visited nodes. The main goal of this step is comparing these newly defined
+against each other, and whenever possible with the actual routes taken by NietRnaast
+drivers on a given day.
+1.4
+Thesis outline
+Following this chapter’s introduction, this thesis is organized as follows. Chapter 2 con-
+sists of a literature review of the various techniques utilized to leverage data in the field of
+MSWM, with a focus on MVDA, ML, and routing. Chapter 3 introduces the background
+of the study, bringing together insights obtained from interviews, relevant academic and
+municipal literature, and on-field observations. This chapter also describes the datasets
+used for the analyses and defines the theoretical framework that supports this thesis.
+Chapter 4 describes the methods applied in each stage of the research; Chapter 5 presents
+the results derived from these methods. Chapter 6 discusses how the research objectives
+in light of the findings, illustrates policy recommendations, addresses the study’s limita-
+tions, and proposes directions for future work. Finally, Chapter 7 concludes the thesis by
+summarizing its main contributions.
+5
+Chapter 2
+Literature Review
+This chapter aims to present a literature review on the applications of various analysis
+techniques in the field of Municipal Solid Waste Management (MSWM). The results of the
+review are separated conceptually, with the themes spanning state of the art reviews, ML
+studies, routing applications, and behavioral analysis. A section is dedicated to studies
+pertaining to the city of Rotterdam. The chapter concludes with a summary table, which
+will serve to compare the various sources examined and highlight the knowledge gap that
+this study aims to address.
+2.1
+Core Concepts
+2.1.1
+AI and IoT in Urban Waste Management
+There are several reviews on the application of AI technologies within the context of Smart
+Cities and MSWM. These mainly focus on the application of various analysis techniques
+to the increasing amount of data available through the Internet of Things (IoT), and the
+advancements in remote sensing technology.
+The study from Bohm et al. (2013) provides a complete overview of the Multivariate
+Data Analysis (MVDA) methods employted in MSWM. These techniques mainly fo-
+cus on exploratory data analysis, factor classification and prediction of parameters. The
+highlighted methods are Principal Component Analysis (PCA) and Partial Least Squares
+Regression (PLS-R), which are respectively used to reduce the dimensionality of data ma-
+trixes with many predictors and to develop quick prediction models. The review from Xia
+et al. (2022) covers the application of various ML algorithms through the entire process
+of MSWM, from collection to final disposal, underscoring how live data can be used to in-
+crease the efficiency of the whole process. Javed et al. (2023) present an overview of XAI
+techniques used in smart cities, underscoring the technologies that are essential towards
+its development. Big Data, IoT and Computer Vision are among the most relevant to
+ML. Fang et al. (2023) provide a general overview of different uses of ML models in waste
+management, from prediction of waste generation to the detection of illegal dumpings.
+Fraternali et al. (2024) focus on remote sensing to detect and characterize illegal waste
+disposal sites: Deep Learning (DL) models for satellite images are among the applications
+of ML for this specific topic.
+These surveys attest to the established use of MVDA techniques in waste management,
+as well as a rapid growth in the use of ML algorithms in recent years. Of those, the
+most commonly implemented models are Artificial Neural Networks (ANN), which were
+6
+utilized in more than half of the articles examined by Xia et al. (2022). Convolutional
+Neural Networks (CNN) are also DL models that have rose in usage for the analysis
+and classification of images. These models are of the black-box kind, which makes them
+hard to interpret and explain. Explainable AI models represent an opportunity to move
+beyond this issue, but in the field of MSWM such research is still rare.
+2.1.2
+Statistical and Spatial Analysis in Waste Management
+Statistical and geospatial analysis are instrumental in understanding the complex mech-
+anisms of waste management. MVDA methods are essential for the analysis of huge data
+structures characterized by hidden patterns and spatial heterogeneity.
+Mikhailov et al. (2007) utilize PCA to analyze landfill composition: the reduction in
+dimensionality of the predictor matrix allowed researchers to identify the specific areas
+within the landfills. Similarly, a study on illegal dumping sites in India (Mondal & Man-
+dal, 2024) employed PCA as a factor analysis technique, in order to reduce the amount
+of independent variables (like population density, road density, pond density) into a few
+principal components that could capture a satisfactory amount of the dataset’s variance
+(in this case, 76%). Furthermore, Mondal and Mandal (2024) utilized an Average Nearest
+Neighborhood approach to investigate the clustering of illegal dumping sites. This was
+used to determine one of the system’s independent variables, dumpsite frequency.
+Similarly, Liu et al. (2019) conducted a study on urban solid waste generation in 30
+provinces of China, which were divided into 3 economic consumption groups based on
+k-means clustering analysis. After this distinction, the researchers built a Multiple Linear
+Regression (MLR) model, to explore the relationship between a dependent variable and
+multiple predictors. Syafrudin et al. (2023) make use of a OLS-R model to perform an
+exploratory factor analysis of the predictors in their research on illegal waste dumping.
+This allowed to identify altitude and population density as relevant predictors, with pos-
+itive and negative correlation respectively. Variance Inflation Factor (VIF) analysis was
+also employed in the preliminary phases of some of these studies (Mondal & Mandal,
+2024; Syafrudin et al., 2023), to identify any potential problems of collinearity between
+the predictors that were being considered for the analysis.
+The statistical and spatial models and techniques mentioned here allow not only to pre-
+dict the volume of waste generation and the occurrences of illegal dumping, but also
+to identify and consider socio-economic and demographic factors.These can be used to
+device specific waste management strategies for different regions, areas, or neighborhoods
+2.1.3
+Machine Learning in Waste Management
+A growing body of contemporary display the integration of various ML techniques with
+MSWM, and in particular the phenomenon of illegal dumping.
+Glanville and Chang (2015) utilize Binary Logistic Regression (BLR) to classify the vari-
+ables that influence the spatial distribution of illegal dumping in Queensland, Australia.
+The most significant predictive factors were population density, primary use of the land,
+and an assortment of distances to the nearest facilities (roads, landfills).
+Johnson et al. (2017) use a Gradient Boosting Regression Tree (GRBT) to predict weekly
+municipal solid waster generation in New York City, using historic data as the training
+set. The model was chosen based on its ability to outperform more traditional statistical
+methods (ARIMA), as well as its interpretability. In the case of this short term predic-
+7
+tion, internal features, such as average weekly temperature, were more significant than
+external ones, like demographic and socio-economic data.
+Thakker et al. (2020) propose an application of XAI to a black-box, DL model used to
+recognize varying levels of gully blockage, which are believed to cause urban floodings.
+The opaqueness of the CNN used in this study was addressed by including expert knowl-
+edge in the classification process through formal frameworks (ontologies and reasoners).
+The explainable version of the model actually saw an increase of the overall predictive
+performance.
+Sakti et al. (2023) use satellite imagery from Sentinel-2 to identify illegal dumping sites
+around a river in Indonesia. A Random Forest (RF) algorithm was used to classify ground
+coverage between buildings, detritus, water, vegetation, and dirt in the images provided
+by the satellite. Du et al. (2023) analyze the road characteristics associated with illegal
+dumping in low demographic density areas. They employ Kernel Density Estimation
+(KDE) to analyze existing illegal dumping grounds and a RF algorithm to analyze areas
+classified as low, normal or high risk. The main drivers behind illegal dumping appear to
+be distance from urbanized areas, as well as natural features that reduce visibility, like
+bushes and trees.
+Geng et al. (2024) use Positive-Unlabeled (PU) learning for predicting the illegal dump-
+ing of hazardous waste. PU learning is used to overcome a lack of labeled historic data,
+which is fundamental for regular supervised ML techniques. The study compares 5 ML
+algorithms: K-Nearest-Neighbors (KNN), RF, Multi-Layer Perceptron (MLP), Logistic
+Regression (LR), and Decision Tree (DT). PU-KNN and PU-RF were the models that
+displayed the better performance and robustness overall.
+Adeleke and Jen (2025) tackle the prediction of MSW generation through a multi-stage
+ML framework, utilizing Principal Component Analysis (PCA), K-Means Clustering, and
+SHAP values as an XAI technique to increase explainability. The latter allows to rank
+features in order of predictive impact, highliting refuse-removal access as the most signif-
+icant predictor. Humidity levels, average household income, and population density also
+demonstrated a positive correlation to MSW generation.
+This sample of sources shows an intensive application of ML and XAI techniques to
+waste management and illegal dumping; however, the context is often peri-urban, rural,
+or industrial. Furthermore, the practice of illegal dumping researched in these studies
+is quite distinct from naastplatsing, which happens in densely populated areas and in
+close proximity to the apt containers for disposal. The use of ML models in munici-
+pal decision-making raises important concerns. Sophisticated models function as black
+boxes, making it difficult to understand how specific predictions are generated. These
+inscrutable systems may be affected by wrongly generated biases, which can have serious
+consequences when it comes to allocating public resources. This undermines trust in
+end-users, which may result in less uptake by stakeholders. The emergence of Explain-
+able AI (XAI) presents an opportunity: by making black-box models more interpretable,
+their opacity can be left behind. XAI has already been recognized as a promising, grow-
+ing field (Adadi & Berrada, 2018). Model explainability, however, has been associated
+with a trade-off of the model’s performance (Arrieta et al., 2019; Gunning et al., 2019;
+Holzinger, 2018): the most accurate models are the least transparent. Still, this notion
+has been challenged in numerous studies (Crook et al., 2023; Herm et al., 2023; Rudin,
+2019) , stating that the relationship between accuracy and explainability is not so linear.
+As stated by Leichtmann et al. (2023), in contexts where decisions made by AI can have
+significant impact, explainability is a desirable quality for a ML model.
+8
+2.1.4
+Routing Heuristics in Waste Management
+Efficient routing is a fundamental element of modern waste management. The complexity
+of real-world constraints, such as vehicle capacity, dynamic container fill levels, and time
+dynamics, make exact optimization impractical, especially for large scale problems. As a
+result, a wide range of heuristic algorithms have been applied to real waste management
+problems, from basic route construction heuristics (nearest neighbor, Clarke & Wright
+savings) strategies integrating Genetic Algorithms and ML techniques.
+Hemmelmayr et al. (2013) explores the Periodic Vehicle Routing Problem with Inter-
+mediate Facilities (PVRP-IF) for the collection of different waste fractions at given fixed
+points. The trucks collecting this waste unload it at locations different from their starting
+depot, making these points intermediate facilities (IFs). To optimize the route position
+of these IFs two approaches are attempted: an exact insertion of the IF node based on
+the shortest detour between two fixed nodes, and a greedy procedure that only inserts an
+IF node when capacity is about to be exceeded. For real-world instances, the PVRP-IF
+algorithm achieved an average 25% reduction in routing costs compared to current man-
+ual planning.
+A study (Louati et al., 2019) to develop an efficient waste collection in Sfax, Tunisia
+modeled real world characteristics like varying waste amounts and collection vehicle ca-
+pacities. Researchers created a Python script in ArcGIS that employs a custom version
+of the Dijkstra algorithm for the spatial routing, with the added constraint of the current
+vehicle’s waste fill-level to determine its next move. The new method reduced total travel
+distance and operational time compared to the manual routing process.
+The research of Yazdani et al. (2021) addresses construction and demolition waste col-
+lection in Sydney, Australia. The proposed approach is based on a simheuristic model
+that combines stochastics and deterministic components to solve the problem. The rout-
+ing solutions are generated by a Genetic Algorithm (GA) pipeline, based on an initial
+selection of random solutions to a deterministic formulation of the routing problem. The
+quality of GA solutions is then evaluated stochastically, by accounting for the uncertainty
+of travel time between locations.
+The paper by Shi et al. (2020) models the collection of household waste in an urban
+setting as multi-depot vehicle routing problem (MDVRP); the optimization goal is to
+minimize the total transportation distance. Researchers use a Sector Combination Ap-
+proach to generate an initial set of solutions, which are then refined using the Merge-Head
+and Drop Tail strategy. The abundance of starting solutions ensures that the model does
+not get stuck in a local optimum.
+A study by Dereci and Karabekmez (2022) evaluates various heuristics to optimize munic-
+ipal solid waste collection in Istanbul, Turkey. The chosen formulation is a Capacitated
+Vehicle Routing Problem (CVRP), with the constraint of visiting each location exactly
+once. Among the evaluated heuristics, the Path Cheapest Arc strategy combined with
+Tabu Seach produced the best results for distance minimization. More frequent collection
+was found to improve citizen satisfaction, offsetting a marginal increase in travel distance
+as a tradeoff.
+Zhao et al. (2024) embed a Reinforcement Learning (RL) strategy in a routing model
+aiming to optimize waste collection by minimizing carbon emissions and operational
+costs. The authors propose a Q-learning based hyperheuristic particle swarm optimiza-
+tion (QLHPSO), which selects the most effective low-level heuristic (LLH) from a pool
+of eight options. This model reacts rapidly to disruptions, such as new service requests
+9
+and vehicle breakdowns; each vehicle is allowed to have multiple trips to collect waste,
+with the aim of reacting to the environmental changes timely.
+Overall, these studies attest that heuristics are consistently utilized to address the chal-
+lenges of waste collection routing. Heuristics provide the flexibility necessary to perform
+comparative analyses to evaluate a wide array of solutions for real world scenarios.
+2.1.5
+Behavioral Drivers of Illegal Dumping
+Literature discussing the behavioral drivers behind illegal dumping is relevant to this
+thesis project, as the results of the ML can only validate an already existing theoretical
+framework of the phenomenon.
+The previously mentioned study by Glanville and Chang (2015) identified the key drivers
+associated with illegal dumping on the Sunshine Coast of Australia. Crucially, while the
+most significant factors were environmental (distance to the nearest street, landfill, and
+roadside amenities), the BLR analysis determined that socio-demographic factors, like
+population density or average median income, were not as relevant.
+Similarly, Du et al. (2023) point towards natural factors, like vegetation coverage, or traf-
+fic volume and road type. However, social factors are also taken into account: isolated
+areas are also classified as high risk. Furthermore, proximity to shops and businesses,
+especially those that treat furniture or function as charities, is also considered as a risk
+factor for illegal dumping.
+The hybrid study by Hohl et al. (2023) explores more in depth the social predictors
+of illegal dumping, incorporating stakeholders’ perspectives in the analysis. Economic
+decline, lack of surveillance, high concentration of vacant buildings, and ”Dumping Cul-
+ture” perception are among the factors social factors that this study associates with illegal
+dumping. This is in line with the ”Broken Window” theory, which suggests that signs of
+public disorder discourage the public from upholding standards of civil behavior.
+2.1.6
+Illegal Dumping in the City of Rotterdam
+A study by Merkelbach et al. (2021) evaluates the effectiveness of enriching the standard
+policy of door-to-door canvassing to reduce illegal dumping with commitment-nudging.
+Households were asked to put a ”Keep the Outdoors Clean” sticker on their doors, and
+information boards were placed right next to waste containers. These nudges proved to
+be highly effective in reducing illegal dumping by two thirds immediately after the test,
+as well as at the 2 month follow-up. The authors suggest that these measures were likely
+aided by strong pre-existing levels of social cohesion, which were only emphasized by the
+nudging strategies.
+A research paper on naastplatsing by the Municipality of Rotterdam (Epskamp & De
+Vries, 2020) combined multiple data streams (administrative documents, employee sur-
+veys, citizen reports of illegal disposal) to offer a bird’s eye view of the main factors
+contributing to naastplatsing. Among these, 5 key indicators were identified:
+• weekends and festivities. A combination of the reduced number of disposal workers
+and the increased amount of people at home during the day contributes to containers
+filling, which can lead to naastplatsing.
+• high volume areas. Some bins are utilized by a significantly greater than average
+amount of citizens; the increased probability of improper disposal points towards
+10
+an inadequate capacity of the containers.
+• social cohesion.
+In neighborhoods with low social cohesion individuals feel less
+responsible for their surroundings, and neighbors don’t look out for problematic
+behavior. Moving is also quite frequent in these areas, which is often responsible
+for large waste to be improperly placed next to containers.
+• technical difficulties.
+More often than not, naastplatsing can be caused by the
+opening of the container malfunctioning. Disposal of carton boxes can also obstruct
+bins even when they’re not full, due to the high-volume this type of waste can
+occupy.
+• socio-economic factors. Frequent naastplatsing has been tied with areas with lower
+incomes, higher percentages of students and/or young adults, and a prevalence of
+small, cheap households.
+2.2
+Conclusion of Literature Review
+The reviewed literature shows that a variety of analysis techniques have increasingly been
+applied in the context of MSWM. Statistical and MVDA methods like PCA, PLS and
+MLR are proven in handling large datasets with multiple predictors, allowing for the
+reduction of dimensionality and evaluation of socio-economic indicators. The integration
+of spatial-based models enables customized analysis and solutions on clusters and other
+geographical aggregations. Recent studies highlight a growing interest for the application
+of ML techniques to MSWM, with a focus on the prediction of the volume of generated
+waste and the location of illegal dumping sites. These models can outperform the tradi-
+tional statistical methods, and their deployment is supported by the vast amounts of data
+that smart cities are able to collect through the development of technologies relating to
+the IoT. The literature also shows that heuristic algorithms are increasingly implemented
+for solving complex routing problems in the waste management domain.
+Their flexi-
+bility allows ad-hoc specification to various operational constraints found in municipal
+solid waste collection. Behavioral and qualitative literature provides a theoretical un-
+derstanding for the interpretation of qualitative results, underscoring the importance of
+socio-demographic factors and the characteristics of neighborhoods.
+Table 2.2 synthesizes these contributions by categorizing the reviewed studies according
+to their methodological focus and research domain.
+Category
+Nr
+Methods
+Review
+7
+Conceptual analysis, literature review
+Statistical Analysis
+3
+MLR, PCA, PLS, GLMM, clustering
+Geospatial Analysis
+3
+OLS, GWR
+Machine Learning
+7
+RF, GBRT, ANN, SHAP, LIME
+Routing
+6
+CVRP, heuristics, GA, RL
+Behavioral and Qualitative Analysis
+3
+Interviews, experiments
+Table 2.1: Synthesis of literature review by topic
+11
+Still, there exists a knowledge gap in the literature for what concerns the analysis of
+naastplaatsing in dense urban contexts. The majority of the studies on illegal dumping
+focuses on rural, industrial, or peri-urban contexts. Fly-tipping is inherenlty different
+from illegal dumping: often the main issue of the latter is to find a secluded area, while
+naastplaatsing always happens next to municipal containers.
+Furthermore, very few studies attempt to combine a theoretical framework of under-
+standing to the qualitative results of a MVDA or ML based analysis. This study aims to
+utilize both quantitative and qualitative analysis to both understand naastplaatsing and
+predict it, with the goal of identifying the key factors causing it and supporting targeted
+intervention towards it.
+12

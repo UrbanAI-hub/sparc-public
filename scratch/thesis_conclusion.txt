@@ -1,0 +1,1360 @@
+Variable Name
+Hypothesis
+Description
+address per km2
+H1
+Proxy of the pressure on container clusters
+klemmers reports
+H2
+Reports of containers being blocked or malfunctioning
+volle container reports
+H2
+Reports of full containers
+nrn visits 2022
+H5
+Proxy for the operational focus of Stadsbeheer in specific areas during 2022
+social cohesion
+H6
+Proxy of social cohesion, derived with PCA over the 2022 Wijk Profiel answers
+avg income per resident
+H7
+Indicator of economic conditions
+population non EU
+H8
+Share of residents originating from outside the EU
+15 to 29 yrs old
+H8
+Share of teenagers and young adults
+Table 5.1: Factor Analysis Variables
+The klemmers reports and volle container reports variables provide information over the
+operational, concrete barriers that contribute to causing naastplaatsing. The social cohesion
+variable is the first principal component extracted from a PCA of the questions asked
+about neighborhood living in the Wijk Profiel of 2022. It alone captures over 80% of
+the variance of that datasets scores, so it is deemed sufficient to cover this topic. Indi-
+viduals not fully integrated with the neighborhood and community are often associated
+with naastplaatsing, thus population non EU is the most relevant share to keep for this
+analysis. This is also on the grounds of these individuals likely lacking knowledge of
+either Dutch or English languages. The 15 to 29 years old age bracket includes teenagers
+and young adults, who are the overwhelming majority of high-school and university stu-
+dents. These groups have often been associated with naastplaatsing, for instance when
+discussing ”candy trails” between schools and supermarkets, or in the context of frequent
+moving in the case of university accomodation.
+The VIF scores of this new set of variables are significantly improved, with only social co-
+hesion scoring barely above 4. The R2 score is now a bit lower than the full-feature model
+(from 0.83 to 0.66); however, the condition number is a much improved 5.5, meaning that
+there is no problematic multicollinearity among variables.
+46
+The variables that hold the most significance (p-value < 0.05) are the following:
+• klemmers reports: positive coefficient (+0.431, p < 0.001)
+Containers experiencing more opening malfunctions are associated with higher
+naastplaatsing rates, consistent with the “impediments” hypothesis.
+• population non EU: positive coefficient (+0.391, p = 0.005)
+Neighborhoods with larger shares of non-EU residents show higher naastplaats-
+ing rates, aligning with qualitative accounts about transient populations, language
+barriers, and weaker neighborhood attachment.
+• total reports 2022: negative coefficient (–0.429, p = 0.0028)
+Areas with more reporting activity show lower naastplaatsing rates, reflecting greater
+operational attention/cleanup responsiveness and/or higher civic engagement (re-
+porting as a protective factor).
+Other variables record borderline effects, with statistical significance between 0.05 and
+0.12: avg income per resident has a negative coefficient (-0.231), while address per km2
+has a positive one (+0.204). Both results are in line with qualitative findings. Finally,
+the variables deemed to be not statistically significant (p > 0.20) are social cohesion,
+volle container reports, and 15 to 29 yrs old.
+Figure 5.2 provides a visual representation of the coefficients of the variables tested on
+naastplaatsing rates.
+Figure 5.2: Results of the OLS regression for 2022 data with minimal predictors
+47
+Figure 5.3: 2023 Correlation Heatmap
+5.2.2
+2023 model
+The analysis of 2023 started with fitting a model with a full set of predictors; once again,
+the results were a high R2 score (0.83), and high condition number (1623), attesting to
+multicollinearity problems. Figure 5.3 shows the correlation heatmap of the full feature
+set for the 2023 naastplaatsing rate.
+The same set of minimal variables per hypothesis was utilized to reduce the model, which
+produced the following set of statistically relevant predictors:
+• klemmers reports: positive coefficient (+0.364, p = 0.00027)
+• population non EU: positive coefficient (+0.459, p = 0.00054)
+Other variables record borderline effects, with statistical significance between 0.05 and
+0.2: volle containers reports has a positive coefficient (+0.168) and total reports 2023
+has a negative coefficient (-0.214), and social cohesion has a negative coefficient (-0.226).
+Finally, addres per km2, ave income per per resident, and 15 to 29 yrs old have a p value
+of above 0.3, making them not statistically significant.
+Figure 5.4 provides a visual representation of the coefficients of the variables tested on
+naastplaatsing rates.
+48
+Figure 5.4: Results of the OLS regression for 2023 data with minimal predictors
+5.2.3
+Model Comparison
+Container malfunctions and origin composition of resident population are the two signals
+that are consistently significant and positive across both 2022 and 2023 models. The di-
+rection of their coefficient is consistent with the findings of the domain knowledge section,
+which associate their increase with a similar trajectory of the target variable. These re-
+sults point towards a (partial) confirmation of hypothesis 2, and a stronger confirmation
+of hypothesis 8.
+The overflow variable starts out as non-significant in the 2022 model, shifting to quasi
+relevant in the 2023 model with a p value of 0.05. The quantitative results converge to an
+agreement with the qualitative insights gained from expert knowledge and strengthening
+the statement of hypothesis 2. Reporting volume, on the other hand, seems to disprove
+the idea that the efficiency of NietRnaast (proxied by the frequency of its visits) is tied
+to more naastplaatsing, since the coefficient for this variable is consistently negative and
+statistically significant.
+The address per km2 variable does not hold statistical significance across both models,
+and its coefficient is not substantial. This would partially disprove hypothesis 1, although
+perhaps pressure from population level may be captured more directly by the malfunc-
+tions/overflow variables.
+Social cohesion remains negatively correlated with naastplaatsing rates in both models,
+partially validating the statement of hypothesis 6. Its lesser statistical significance is
+perhaps tied to its linear dependence to other variables included in the model (namely
+prosperity and population composition), given that it retains the highest VIF value across
+both models.
+The avg income per resident and 15 to 29 yrs old remain mostly statistically inconse-
+quential in both models, pointing to either a disproval of hypotheses 7 and 8 or to the
+inadequacy of these proxies to represent the relationship with the target variable.
+49
+5.3
+Predictive Modeling
+After analysing which naastplaatsing-related characteristics of neighborhoods interact
+most significantly with the phenomenon, the level of granularity is reduced to the con-
+tainer cluster level. In this step, three tree based regression models are trained to predict
+the normalized naastplaatsing rate at the container cluster level over the 2025 NietRnaast
+actions dataset. The variables used at this stage are divided into the following categories,
+with a full breakdown in Appendix A.3:
+• malfunctions/overflow: rates of malfunction/overflow rates, fill time of the fastest
+container in the cluster.
+• operational involvement: total NietRnaast visits in 2025, type of collection (sched-
+uled vs fixed), presence of container adopter.
+• cluster composition: counts of waste fraction containers in the cluster, counts of
+container types in the cluster, capacity of containers in the cluster.
+• business pressure and location access: amount of hotels, restaurants, cafes in a 100
+meter radius of the container cluster, distance to the closest public waste disposal
+facility.
+• temporal patterns: average and max streak of interventions that found trash next
+to the containers, the rate of problematic waste deposited next to containers, and
+the rate of naastplaatsing happening on days that are outside of the post-weekend
+surge.
+For the results of the Hyperparameter tuning, refer to Appendix B.
+5.3.1
+Tree Models
+The evaluated models are a (Shallow) Decision Tree, a Random Forest, and a Gradient
+Boosting regressor. Table 5.3.1 lists the performance of each of these models across the
+performance metrics described in section 4.3.
+Model
+RMSE
+MAE
+R2
+GradientBoosting
+0.067
+0.047
+0.949
+RandomForest
+0.068
+0.045
+0.948
+ShallowTree
+0.080
+0.053
+0.928
+Table 5.2: Model Performance
+All models demonstrate strong predictive performance across the selected evaluation met-
+rics, indicating that each algorithm is capable of capturing the underlying relationships
+between the target variable and features with low error. Among the three, the Gradi-
+ent Boosting regressor performs best overall, achieving the highest R2 value (0.949) and
+the lowest RMSE (0.067). and MAE (0.047). This suggests that it not only models
+the greatest proportion of variance in the data but also produces the smallest prediction
+errors in terms of average magnitude (MAE) and error sensitivity to larger deviations
+(RMSE). The Random Forest model follows closely with comparable error levels and
+50
+only a marginally lower R2 (0.948), indicating similarly robust performance. It edges out
+the Gradient Boosting model in sensitivity to outliers, as shown by its superior MAE
+score (0.045). The shallow decision tree yields reasonably good results (R2 = 0.928),
+yet still noticeably worse than the ensemble-based models, which is expected given its
+limitations. Overall, the results reinforce that tree models, and in particular ensemble
+methods, are well suited for this predictive task.
+Model
+Feature
+Importance
+Shallow Tree
+avg streak
+0.2511
+bad waste count
+0.0269
+nietrnaast visits 2025
+0.0121
+klemmers rate 2025
+0.0035
+bad naastplaatsing day share
+0.0034
+Random Forest
+avg streak
+0.2272
+bad waste count
+0.0306
+nietrnaast visits 2025
+0.0169
+bad naastplaatsing day share
+0.0088
+fastest fill time
+0.0059
+HistGB
+avg streak
+0.2137
+bad waste count
+0.0333
+nietrnaast visits 2025
+0.0237
+bad naastplaatsing day share
+0.0143
+klemmers rate 2025
+0.0129
+Table 5.3: Top five features by SHAP importance for each tree-based model.
+SHAP (SHapley Additive exPlanations) feature importance quantifies how much each
+input variable contributes to the model’s predictions by computing Shapley values. This
+approach is based on cooperative game theory, evaluating all possible combinations of
+features to determine their marginal contribution; the additive result is the actual pre-
+diction produced by the model. This method provides a consistent, model-agnostic ex-
+planation of feature influence by decomposing each prediction into these additive con-
+tributions.
+Across the three machine learning models evaluated, the SHAP analysis
+reveals a stable set of dominant predictors: the top five features consistently include
+avg streak, bad waste count, nietrnaast visits 2025, bad naastplaatsing day share, klem-
+mers rate 2025 and fastest fill speed, although their presence and/or relative ranking
+varies slightly between models.
+Gradient Boosting and Random Forest show similar
+importance profiles, with features other than the avg streak scoring more substantially
+than the shallow decision tree, which exhibits a more concentrated dependence on the
+strongest predictor. This shows how the ensemble models produce more nuanced results.
+For each of the three models, a SHAP summary plot is created. This plot provides an
+overview of how all features contribute to the model’s predictions across the dataset.
+Each point represents a single observation, with its position on the x-axis showing the
+SHAP value: how much that feature increases or decreases the prediction output. Wider
+positions on the x-axis indicate significant contribution. Features are ordered vertically
+by overall importance, so the most influential variables appear at the top. The blue-red
+colour gradient indicates the original feature value, with blue indicating a low value and
+red a high one: this helps in identifying patterns such as whether high or low values of
+51
+a feature drive predictions upward or downward. In combination, the vertical thickness
+of the variable observations shows the quantity of datapoints that display a certain pre-
+diction influence. This can help determine whether their effects are consistent or highly
+variable across observations.
+Figures 5.5 and 5.6 show the summary plots for each of the ensemble models.
+Figure 5.5: SHAP summary plot for Random Forest model
+Figure 5.6: SHAP summary plot for Gradient Boosting model
+52
+The avg streak variable dominates prediction, with a wide spread of red-positive and blue-
+negative impacts. Clusters that experience consecutive and/or frequent naastplaatsing
+occurrences score a higher naastplaatsing risk, meaning they are more likely to experience
+it again; viceversa, clusters with low streak scores tend to be less exposed to naastplaats-
+ing. This result is consistent with the feedback loop of the “trash brings trash” effect
+described by literature and experts. The avg streak variables represent the historic be-
+havior of naastplaatsing on container clusters, which indicates that the history of specific
+container holds significant importance over its likelihood of showing naastplaatsing. The
+relevance of the bad waste count suggests that the type of naastplaatsing waste is strongly
+correlated to the risk. The constant presence of the klemmers rate feature further solidi-
+fies the relevance of these incident reports; conversely, the absence of volle container rate
+also reinforces the comparative relevance of these two features, already observed with the
+results of the OLS regression discussed in section 5.2.3. The variable capturing opera-
+tional attention, nietrnaast visits 2025, show with its red-negative blue-positive impacts
+that more visits do contribute to reducing naastplaatsing rates. The temporal aspect of
+naastplaatsing is underscored by the result of bad naastplaatsing day share: containers
+that experience naastplaatsing in a greater quantity even beyond the post-weekend surge
+days are overall more exposed to risk. Finally, the singular contribution of fastest fill speed
+in the Random Forest results can be interpreted as follows: very high (bright red) values
+of fastest fill speed of a container in the cluster, meaning that the fastest container is
+quite slow compared to the average, reduce the risk of naastplaatsing. This confirms the
+theoretical framework’s conjecture that container with higher fill times, dealing with a
+lower volume of generated waste, are less exposed to naastplaatsing.seems to indicates
+that high-pressure containers, which have to deal with higher volumes of waste, are more
+exposed to naastplaatsing. Overall, the SHAP results provide interpretable evidence that
+these key variables drive model performance across all approaches.
+The summary SHAP plot of the shallow Decision Tree regressor can be found in Appendix
+C.
+5.3.2
+Individual SHAP visualizations
+SHAP waterfall plots provide a further understanding of the individual impact of different
+features on the final predicted target. A few examples individual datapoints from the
+Gradient Boosting regressor model are discussed in the following.
+For the instance depicted in figure 5.7, the model assigns an extremely high probability
+of naastplaatsing. This is almost entirely driven by the avg streak variable, which shows
+a significant 2.4 value; features like klemmers rate and bad waste count also have very
+positive values, yet their effect isn’t nearly as impactful. This data point is likely one of
+the red bright dots on the far right of the avg streak row in figure 5.6. The contribution
+of all the other features is minimal.
+53
+Figure 5.7: SHAP waterfall plot of a high-risk cluster
+Figure 5.8 displays a low risk cluster, with a predicted score of 0.073. Similarly to the
+previous case, the avg streak feature contributes to most of the prediction. In this instance
+the effect on the prediction output is the opposite, given the low value of the variable
+(-0.516); exceptionally low values for bad naastplaatsing day share and bad waste count
+also contribute to reduce the model’s output. The only positive push comes from the
+extraordinarily small amount of NietRnaast visits in 2025, which increases the overall
+risk of the cluster. This is conceptually sound, considering the idea that clusters with
+less operational attention can deteriorate in unexpected ways; still, the contribution is
+not significant to sway the final prediction meaningfully.
+Figure 5.8: SHAP waterfall plot of a low-risk cluster
+The prediction of a mid-risk cluster in figure 5.9 is less of a foregone conclusion. Here
+the contribution of the avg streak is only ranked fourth in absolute terms, pushing the
+effect slightly above even if its value is actually negative.
+It is likely that this value
+is not negative enough for the model to use it to lower the prediction output.
+The
+three features that influence this cluster’s prediction are still among the most relevant
+ones. The extremely high rate of klemmers reports increases the risk prediction, which
+is however reduced again by a low value of the bad waste count feature. The lack of
+54
+recorded naastplaatsing incidents in the later days of the week, attested by the low value
+of the bad naastplaatsing day share feature, also contributes to dropping the prediction
+output.
+Figure 5.9: SHAP waterfall plot of a medium-risk cluster
+5.4
+Routing Study
+The routing study represents the operationalization of the predictions computed by the
+ML models in the previous step of this research. Its purpose is to verify whether these
+predictive outputs can be translated into viable, real-world applications. In doing so, the
+findings of the stakeholder analysis are also assessed. Specifically, the routing methodol-
+ogy evaluates how different routing configurations perform when addressing naastplaats-
+ing, using metrics that capture both sides of the trade-off between cost efficiency of the
+NietRnaast operation and the quality of its coverage and interventions. By testing mul-
+tiple strategies from both perspectives, this routing study provides empirical evidence on
+whether the proposed methodological approach can balance operational efficiency with
+service quality in practice.
+The 12 selected neighborhoods are: Afrikaanderwijk, Beverwaard, Bospolder, Delfshaven,
+Groot IJsselmonde, Het Lage Land, Kleinpolder, Liskwartier, Prinsenland, Tarwewijk,
+Tussendijken, and Zuidwijk. Figure 5.10 shows their position on the map of Rotterdam,
+along with a color grading indicating their global naastplaatsing rate in 2025.
+55
+Figure 5.10: Naastplaatsing rate (2025) of neighborhoods in the routing study
+An initial observation shows that the average amount of container clusters visited in
+different days of the week tends to vary significantly. The average amount of container
+clusters visits per day in the areas is broken down by the graph in figure 5.11. Saturday
+and Sunday display, as expected, a significantly lower amount of visits compared to the
+rest of the weekdays.
+Figure 5.11: Average actions per day (2025) in routing neighborhoods
+Extracted distributions and routes of actual NietRnaast operations by day are thus ex-
+tracted in groups of 10 instance per area, 2 instances per each day of the week (Monday
+through Friday), with random sampling of months between May and December of 2025
+to accomodate for the time-stamp availability constraint described in section 4.4.
+56
+The 5 heuristics utilized to build routes are next-best distance routing, risk-based routing,
+k-neighbor distance-risk routing, distance-risk ratio routing, and convex hull heuristic; the
+constructed routes are evaluated on the basis of the total distance they cover and the
+collection penalty they incur on for a specific naastplaatsing distribution extracted from
+the NietRnaast dataset. The heuristics build routes for 10 days over each of the 12 areas
+selected for this study; there are thus 720 total routes, 120 distributions and actual routes
+and 600 routes built by the 5 heuristics.
+Evaluating the performance of a heuristic’s results is a matter of interpretation and
+perspective. Different stakeholders may be interested in different things; some may prefer
+routes that minimize the covered distance above anything else, while others may be
+drawn to more balanced solutions. To provide a complete overview, the two following
+visualizations are presented and discussed.
+Figure 5.12 shows how many times each
+heuristic has scored the best in either of the performance metrics, while figure 5.13focuses
+on the comparison between each heuristic and the actual route’s performance.
+Figure 5.12: Absolute performance of heuristic routes
+Figure 5.13: Performance of heuristic routes against actual route
+These visualizations clearly display the performance trends across the 5 heursistics. The
+purely distance-based approaches, next-best distance and convex insertion, dominate the
+distance metric. Convex insertion wins 75 times and next-best distance 44, whereas all
+other heuristics win only once combined (the ratio heuristic). The two distance heuris-
+tics overwhelmingly outperform not only their competitors, but also the actual routes:
+both convex insertion and next-best distance beat the real-world route 93 times (out of
+120 total) in terms of traveled distance. However, this dominance does not translate to
+collection penalty. Distance-based heuristics remain among the weakest performers on
+57
+this metric, with only 8 (distance) and 7 (convex) absolute wins, and only 34 and 32
+improvements over the actual routes respectively. This aligns with their expected behav-
+ior: being risk-agnostic methods, they minimize distance at the expense of risk-related
+performance. The purely risk-based heuristic displays the opposite profile. It wins 66
+times in terms of collection penalty, by far the highest of any other method, and improves
+on the actual route 80 times. Yet it is never the best algorithm distance-wise, confirming
+the substantial route length inefficiency characteristic of risk prioritization. In terms of
+actual route comparison, it consistently represents a degradation relative to the status
+quo. The hybrid heuristics present a more nuanced picture. The k-neighbors method
+performs moderately well on collection penalty, with 22 wins and a strong 67 improve-
+ments relative to the actual routes. However, it does not win any distance competitions
+and outperforms the actual routes only 28 times in terms of distance, consolidating it as
+a mediocre option. In contrast, the ratio heuristic stands out. Although it wins only 1
+absolute distance comparison, it improves upon the actual routes 88 times on the same
+metric, equalizing the results of the purely distance-based algorithms. It also performs
+strongly on collection penalty, with 17 absolute wins and 66 improvements relative to
+the actual route, surpassing both distance-based approaches and approaching the per-
+formance of k-neighbors.
+While it does not match the risk heuristic’s dominance on
+collection penalty, it avoids the severe downside that comes with its distance-agnostic
+logic. These results show that the ratio heuristic is the most well-balanced method: it
+is the only heuristic that consistently outperforms the actual route on both metrics at
+scale, doing so without the extreme trade-offs present in the purely distance or risk driven
+strategies. For stakeholders concerned with balancing the trade-off between efficiency and
+operational quality, the ratio heuristic offers the most robust compromise across the com-
+peting objectives.
+The average performances by route on both distance and collection penalty metrics for
+each of the 12 neighborhoods can be found in Appendix C.
+58
+Chapter 6
+Discussion
+This chapter interprets the results of the proposed methods in light of the research ques-
+tion and subquestions posed in section 1.3. After addressing these research objectives,
+policy recommendations are discussed. The Limitations section reflects on the method-
+ological and data-related hurdles that shaped this study and impact its generalizability.
+The final section outlines directions for future work on the subject.
+6.1
+Research Objectives
+This section discusses how the empirical findings answer the main research question:
+Can the phenomenon of naastplaatsing in Rotterdam be modeled to un-
+derstand its root causes and efficientize the response to address it?
+To answer the main research question, 4 research objectives have been identified and
+tied to the different steps of this thesis. The results of each step provide answers to the
+research sub-questions, and are discussed in the following.
+1) Who are the most relevant stakeholders in the decision arena of the naast-
+plaatsing problem, and what is currently understood about it?
+The key stakeholders in the decision arena are the Alderman, Stadsbeheer management,
+NietRnaast teamleaders and operators, Inzameling and Reiniging personnel, Handhav-
+ing officers, various groups of residents (including perpetrators, concerned residents, and
+container adoptants), and higher-level strategic advisors. Their objectives can be sum-
+marized by two perspectives:
+• operational efficiency: minimising collection time, distance, and costs.
+• behavioural impact: reducing the visibility, duration, and spread of naastplaatsing
+to prevent further dumping.
+High-level decision makers must ultimately balance both perspectives when shaping policy
+and operational responses. The theoretical framework constructed in this study, a result
+of the combination of the three streams of information used to build domain knowledge,
+cements that Naastplaatsing is a complex phenomenon, driven by multiple correlated
+factors. The decision arena is a complex network of stakeholders, whose interests and
+influence shape naastplaatsing and how Stadsbeheer responds to it.
+59
+Stakeholders can be characterized as operationally or behaviorally inclined, depending on
+which of the two perspectives they prioritize. The most strategically relevant actors are
+those who must bridge the gap between these two goals: the alderman, Stadsbeheer man-
+agers, and (to a lesser extent) NietRnaast managers. Their public-facing positions require
+balancing the efficiency demands of daily operations with the behavioral objectives tied to
+naastplaatsing public perception and long-term waste norms. The stakeholder mapping
+of figure 3.2 also reveals a fundamental misalignment in the power–interest structure of
+the decision arena. The actors whose behaviour directly produces naastplaatsing possess
+high influence but low interest in resolving it. Perpetrators represent the most problem-
+atic configuration: they hold substantial physical power, and with their actions can shape
+the behavior of other actors. Yet, they have minimal intrinsic motivation to change. Sim-
+ilarly, “lazy but knowledgeable” residents contribute to undesirable waste patterns while
+lacking meaningful accountability. By contrast, many of the actors who are highly com-
+mitted to maintaining clean streets—such as concerned residents, container adoptants,
+and NietRnaast runners hold limited structural power. They care about neighborhood
+cleanliness and perceive the effects of public space deterioration produced by naastplaats-
+ing, but can only operate within narrow operational or social boundaries. This imbalance
+underscores why naastplaatsing persists as a wicked problem: the stakeholders who could
+meaningfully reduce the phenomenon are not the ones with the motivation to do so, and
+those who are motivated lack the authority or structural leverage needed for significant
+change.
+2) How can MVDA techniques be utilized to validate the findings and hy-
+potheses of the naastplaatsing theoretical framework?
+The multivariate data analysis (MVDA) conducted in this study provides a meaningful,
+yet partial, validation of the theoretical framework. The conjectures on the impact of
+operational impediments and the origin composition of residents on naastplaatsing rates
+at the neighborhood level are consistently and robustly supported by the Ordinary Least
+Squares (OLS) regression yearly models at the neighborhood level. Other hypotheses and
+framework relationships are tentatively backed, with variables often demonstrating clear
+limits in their ability to proxy the real phenomenon. MVDA techniques proved to be
+useful in validating and refining the framework, but not sufficient on their own.
+The initial set of OLS models (section 5.2), estimated separately for 2022 and 2023 at
+neighborhood level, shows that MVDA techniques can capture a substantial share of the
+variance in naastplaatsing rates. This high explanatory power, however, is tied to the full
+set of feature, which introduces issues of severe multicollinearity and instability in the
+coefficient estimates. The reduction strategy employed to address this issue is supported
+by the hypotheses formulated in section 3.4.2.
+Operational impediments are the most robust predictors of naastplaatsing rates at the
+neighborhood level. The “klemmers” variable is positively correlated with the target vari-
+able and highly statistically significant in both yearly models. The predictor representing
+overflow incidents also inches towards significance in the 2023 model. Together, these
+findings provide a strong validation of H2. Resident composition matters consistently
+on the side of origin, rather than age. The share of non-EU residents in neighborhoods
+is positively correlated to naastplaatsing rates and statistically significant across both
+yearly models; on the other hand, the 15 to 29 years old variable chosen to represent age
+portion of the cultural and normative practices hypothesis is not significant in either year.
+At this spatial scale, H8 is only partially validated. Pressure and prosperity variables are
+60
+directionally consistent with the hypothesis they represent, but their statistical signal
+is weak. This suggests that H1 and H7 are partially supported, but perhaps could be
+validated at a different aggregation level, likely a finer one. Social cohesion is negative
+in both yearly models, but it is not statistically significant in the 2022 and barely so in
+the 2023 one. This is likely because it is the variable with the most linear dependence
+with other features, mainly demographic composition and prosperity; furthermore, the
+evaluation of this metric must always be contextualized with the fact that the 2023 values
+are an imputation of 2022 and 2024 observations, since the data generating process is
+biennial. These results offer at best a tentative support of H6.
+These results show that MVDA techniques can indeed be used to validate key aspects of
+the naastplaatsing theoretical framework. However, an important caveat must be consid-
+ered: the quality of the validation depends on the adequacy of the chosen proxies and the
+scale of analysis. It is perhaps telling that one of the most solidly validated relationships,
+the operational H2, stems from the most solid and plentiful dataset available, requiring
+minimal transformations and proxies to achieve an empirically usable variable. The an-
+swer to sub-question 2 is nuanced: MVDA is not the enough to evaluate the framework
+on its own, but it is an effective instrument for distinguishing robust relationships from
+weaker ones.
+3) Can ML algorithms be employed to model naastplaatsing in Rotterdam
+to a satisfying level of prediction accuracy and result explainability?
+The results of the predictive analysis indicate that tree-based models are highly suitable
+for capturing the complex, non-linear relationships between predictors and naastplaatsing
+rates container cluster level. Model’s performance is strong consistently across Decision
+Tree, Random Forest, and Gradient Boosting regressors; SHAP-based feature importance
+provides a transparent and interpretable decomposition of how each feature contributes
+to the predicted risk. These explanations strongly align with the theoretical framework
+and domain knowledge, confirming the usefulness of these models for understanding and
+forecasting naastplaatsing patterns.
+The avg streak variable dominates prediction, providing a strong confirmation of H5.
+Clusters that experience consecutive and/or frequent naastplaatsing occurrences score a
+higher naastplaatsing risk, meaning they are more likely to experience it again. This
+feedback loop is consistent with the “trash brings trash” effect described by literature
+and experts. The temporal dynamics captured by bad naastplaatsing day share highlight
+that clusters experiencing naastplaatsing outside the typical post-weekend surge are more
+exposed to sustained risk. This confirms that naastplaatsing patterns vary not only in
+magnitude but also in timing, as stated by H4, and that persistent occurrences across the
+week imply vulnerability. The nietrnaast visits 2025 variable displays a SHAP pattern
+consistent with the conceptual understanding of naastplaatsing: higher visit counts are
+associated with lower predicted naastplaatsing, suggesting that operational attention has
+a mitigating effect. Earlier assumptions about visit frequency merely correlating with
+problematic clusters are replaced by the definition of a protective relationship between
+responsiveness and reduced risk. The prominence of bad waste count indicates that the
+type of dumped waste, especially when it is of significant volume, is closely tied to re-
+curring naastplaatsing. Clusters consistently receiving problematic or bulky waste show
+higher predicted risk, confirming that waste composition acts as a structural predictor of
+future incidents. The strong statistical signal of klemmers rates in the OLS regression is
+partially picked up by the Decistion Tree and the Gradient Boosting regressors, further so-
+61
+lidifying the relevance of these operational features. The contribution of fastest fill speed
+confirms that clusters with slower-filling containers, and thus lower structural pressure,
+tend to exhibit lower risk.
+Together, these findings indicate that ML algorithms can indeed model naastplaatsing
+with both strong predictive accuracy and high explainability. The performance results
+support the viability of the ML-based risk predictions, while SHAP interpretations vali-
+date key mechanisms of the theoretical framework. ML models are excellent at detecting
+correlation, yet they should never be burdened with explaining causation: the explain-
+ability methods allow humans in the loop with domain knowledge to contextualize their
+outputs. This robust approach makes these ML predictions a valuable tool for supporting
+strategic understanding and operational decision-making in Rotterdam’s naastplaatsing
+response.
+4) How can the collection process of naastplaatsing be made more efficient?
+The routing study shows that the collection process of naastplaatsing can be made sub-
+stantially more efficient, both in terms of operational costs (distance traveled) and ser-
+vice quality (collection penalty). While no single heuristic dominates both metrics, the
+distance-risk ratio heuristic consistently outperforms the actual routes across both dimen-
+sions, demonstrating that more balanced and efficient collection strategies are attainable
+without compromising behavioral responsiveness.
+The evaluation relies on two performance metrics that reflect the perspectives prioritized
+by stakeholders:
+• total distance traveled, which represents a proxy for workload, fuel consumption,
+equipment wear and tear, and route efficiency. These are the main concerns of
+operational teams.
+• collection penalty, capturing how long naastplaatsing remains visible at each con-
+tainer and weighting more disruptive waste more heavily. This metric expresses
+behavioral, normative, and quality-of-service perspectives emphasized by planners,
+managers, and residents.
+Together, these metrics synthesize and operationalize the dilemma highlighted in the de-
+cision arena: the need to reconcile operational feasibility with timely responses to prevent
+behavioral feedback loops of naastplaatsing.
+Across the five heuristic strategies tested, several clear patterns emerge. The distance-
+based heuristics outperform the other algorithms consistency on route efficiency, but sys-
+tematically fall short in the timely collection of disruptive waste, making them unfit for
+addressing behavioral priorities. The risk-based heuristic excels in prioritzing problematic
+containers, but the routes it creates are simply infeasible from an efficiency perspective.
+Hybrid heuristics provide a more balanced solution. The k-neighbors method improves
+upon the actual routes primarily in terms of collection penalty, but its distance perfor-
+mance remains mediocre. The ratio heuristic is instead capable of improving the actual
+route on both performance metrics consistently, delivering the most balanced outcome
+by far. Unlike the risk-based strategy, it maintains operational feasibility; unlike the dis-
+tance heuristics, it remains attentive to disruptive waste that shapes resident perceptions
+and behavioral spillovers.
+The overall insight of the routing study is that NietRnaast’s current operational setup
+leaves substantial room for improvement, and that efficiency gains do not require choos-
+ing between operational or behavioral priorities. The ratio heuristic shows that routes
+62
+can be shorter and high risk containers can be prioritized simultaneously. This balanced
+performance aligns closely with the goals of high-level strategic stakeholders, who must
+continuously negotiate the trade-off between cost efficiency and street-level service qual-
+ity. Given these insights, the answer to the main research question:
+Can the phenomenon of naastplaatsing in Rotterdam be modeled to un-
+derstand its root causes and efficientize the response to address it?
+is Yes. This study demonstrates that naastplaatsing in Rotterdam can be effectively
+modeled both to deepen understanding of its underlying mechanisms and to improve the
+efficiency of the operational response.
+The theoretical framework developed through literature, expert interviews, and field in-
+sights, successfully characterizes naastplaatsing as a wicked problem. It identifies the two
+overarching goals of the stakeholders involved with this problem, the imbalance in the
+decision arena caused by their positioning, and the relationships between predictors and
+naastplaatsing that need to be investigated to better understand this phenomenon. The
+theoretical framewoek provides the underlying support to broaden the understanding of
+naastplaatsing, supporting more empirical steps like the predictive modeling when its
+results need causal contextualization.
+MVDA confirms and refines several of the mechanisms proposed in the theoretical frame-
+work, expressed in the form of hypotheses. The results of the OLS regressions and their
+comparison demonstrate that statistical modeling can meaningfully distinguish between
+strong and weak explanatory factors. Where these traditional methods reach their lim-
+itations due to non-linear relationships and multicollinearity, ML extends the analysis
+by capturing more complex interactions and offering interpretable, cluster-level predic-
+tions. The tree models trained as part of the predictive modeling step provide accurate
+and interpretable predictions of naastplaatsing risk at the container-cluster level; SHAP
+analyses reveal that both historical behavioral patterns (“trash brings trash”) and oper-
+ational conditions (malfunctions, waste types, temporal stress) govern the prediction of
+risk, showing good adherence between the model’s thought process and the theoretical
+framework of naastplaatsing developed through domain knowledge.
+Finally, the routing study shows that integrating risk into operational decision-making,
+even in a simplified and experimental setting, can lead to concrete improvements in col-
+lection efficiency. While different routing heuristics embody different stakeholder goals
+and perspectives, the ratio heuristic consistently outperforms the actual routes on both
+distance and collection penalty, dominating in terms of the efficiency/quality trade-off.
+This confirms that modeling not only can support understanding naastplaatsing, but
+it can also directly support the design of operational improvements, aligning with the
+various priorities of the stakeholders involved in naastplaatsing and its response strategy.
+63
+6.2
+Policy Recommendations
+The findings of this thesis show that naastplaatsing is a complex phenomenon, shaped by a
+multitude of interconnected factors. While some of these are in more or less direct control
+of Stadsbeheer, like the involvement of its departments, or the position of container
+clusters, many other of the upstream drivers of naastplaatsing seem to fall outside of
+its mandate. Some of the structural causes of this phenomenon are broader social and
+spatial dynamics: population mobility, housing shortages, socio-economic degradation are
+not factors that can be tackled through analysis and optimisation. However, Stadsbeheer
+can operate to reduce both the frequency and the impact of naastplaatsing by acting on
+the mechanisms that are within its decision-making boundaries. In the following, three
+broader policy approaches are discussed, detailing which area of the naastplaatsing area
+they are designed to tackle and how.
+6.2.1
+Routing that Works
+From a strictly operational point of view, the routing study demonstrates that the col-
+lection process can be made more efficient. A further development of the risk-distance
+ratio heuristic would allow to allocate resources more efficiently, with equipment suffering
+from less wear and overall collection times becoming shorter. Simple routing tools should
+be integrated into the daily NietRnaast workflow; these must be designed in tandem
+with the primary users, the drivers, in order to adapt them to the operational reality
+of naastplaatsing collection. ML-based predictions could enable NietRnaast to reduce
+the size of their routes. Clusters with consistently low predicted risk can be visited less
+frequently, freeing up time and resources for hotspots where naastplaatsing is persistent
+or disruptive. This lesser attention is appropriate especially for clusters with no history
+of recurrent naastplaatsing, but, as discussed next, it also can serve a behavioral purpose.
+6.2.2
+Behavior that Shifts
+Reducing frequency and reducing impact do not necessarily require the same operational
+intensity everywhere. The study shows that despite the flaws with some of the tooling
+and practices, NietRnaast operates at a high level of efficiency. As described by a few
+interview participants (Participants A, B, C, Appendix A.1), this can turn out to have a
+negative impact on naastplaatsing: waste is removed so quickly that perpetrators do not
+have the opportunity to experience the consequences of their own actions. This creates a
+perverted behavioral incentive for chronic offenders: naastplaatsing remains convenient,
+and its effects are short-lived. At the same time, the persistence of naastplaatsing in
+visible areas has a well-documented and empirically investigated effect: the ”trash brings
+trash” theorem, effectively a waste multiplier. This creates a genuine dilemma: collect-
+ing too quickly everywhere reduces visibility but maintains convenience, but collecting
+too slowly increases the chance of triggering a multiplying effect. The missing piece to
+solve this puzzle is naastplaatsing’s variability: the risk on container clusters is not uni-
+form, and it is also predictable. Stadsbeheer should pursue a selectively fast and slow
+response strategy, guided by predicted risk and behavioral dynamics. Hotspots and areas
+where multiplying effects are prevalent should still be subject to quick collection; how-
+ever, chronically problematic containers could be visited less frequently, to reduce the
+convenience perpetrators currenltly enjoy. This is only one of the levers that Stadsbeheer
+64
+can act upon to elicit a change of behavior in the most problematic naastplaatsing stake-
+holder: the other is perceived risk. Coordinated presence of Handhaving near chronic
+hotspots can shift local norms and reduce opportunistic dumping. This does not require
+blanket enforcement, but targeted visibility, which could even be based on the ML-derived
+risk map and other time-based considerations, like the current day of the week or the
+proximity to holidays.
+6.2.3
+Mind the Gap
+This study has uncovered a structural disconnect between the ”thinking” stakeholders
+that designs workflows and tools, and the operational level that must use them. Many of
+the flaws of the NietRnaast app, for instance, are integration failures more than technical
+challenges. This persists largely because primary users are not involved in the design
+process, and also because the feedback loop between these stakeholders is not working as
+intended. This thesis offers many different directions in which to develop the operational
+response to naastplaatsing; yet, any of the findings and improvements designed at this
+stage could be completely useless if not integrated with the people that must work with
+them. Stadsbeheer must work to close the gap between operational practice and strate-
+gic decision making: this means both in terms of communication between personnel,
+and data usage and sharing between the layers of the departments that work together
+to address the challenges posed by naastplaatsing. From an internal policy perspective,
+Stadsbeheer should embed ”collaborative design” practices into its solution and innova-
+tion cycle by establishing structured feedback loops between drivers, team leaders, and
+tool developers. Furthermore, the mechanisms to report and correct design choices must
+be formalized. The flow of information between street-level expertise and thinking-level
+decisions needs to be facilitated; this alignments is essential to tackle a problem as com-
+plex as naastplaatsing.
+Together, these recommendations show that although Stadsbeheer cannot address some
+of the root causes of naastplaatsing, it can influence the mechanisms that regulate it. By
+integrating data-driven routing, applying behavioral insights through a selective fast–slow
+strategy, and ensuring that operational expertise guides strategic planning, Rotterdam
+can develop a more resilient and responsive system for managing naastplaatsing.
+6.3
+Limitations
+This research aimed to comprehensively analyze the phenomenon of naastplaatsing, uti-
+lizing all the available data and techniques to produce a faithful representation of this
+issue and provide insights valuable to further address this challenge. Despite these efforts,
+there are some limitations that contextualize the boundaries of this study’s findings.
+Across the multiple accessed datasets, completeness, granularity and temporal coverage
+vary greatly. NietRnaast data is reliable and usable only from 2022 onwards, and its
+timestamp feature only since May of 2025. The socio-demographic datasets (CBS and
+Onderzoek010) are complete only up to 2023, with social cohesion variables requiring
+imputation due to the biennial nature of their collection. The finest spatial granularity
+recorded by these datasets is neighborhood level, while the NietRnaast dataset collects
+actions at the container cluster level; the Waste Vision (WV)dataset, which describes
+features like filling speed and waste fraction, deals instead with containers. While a syn-
+thesis between container and cluster level was possible, the neighborhood-level variables
+65
+were not included in the Predictive Analysis section, in order to avoid articial clustering
+of the observations. GFE containers are also entirely missing from the WV dataset, since
+they are not included in the collection routes used by the Inzameling departments; this
+is because this type of containers only recently started to integrate fill sensors in their
+management. Finally, the lack of access to GPS data lead to devising a method to ap-
+proximate a representation of the current routes; while this approach is deemed sufficient
+for comparative purposes, having access to the real routes would improve the reliability
+of this study’s results.
+The behavior of the drivers in charge of the data generating process for the NietRnaast
+dataset contributes to a few data quality concerns. Drivers have been observed systemat-
+ically misclassifying the type of actions they carry out on the container clusters they visit.
+This is done in an effort to move through their route quickly; in a haste to move on to
+the next container, NietRnaast drivers select the “Klein afval” option, which is the most
+general type of small waste residue. This category is massively overrepresented in the
+NietRnaast dataset, growing from 10.29% in 2022 to 27.64% in 2025. Furthermore, until
+recently drivers could only take a photo if they recorded an action as a form of naast-
+plaatsing. NietRnaast team leaders sometimes ask their drivers to take pictures for all
+the containers they visit, meaning that the workers are forced to mislabel clean clusters as
+dirty, introducing noise in the dataset. This issue has particularly negative consequences
+in Target Wijks, areas of Rotterdam that have reported issues with naastplaatsing and
+waste management. Drivers servicing these areas are asked to take pictures here more
+often, leading to a feedback loop that negatively reinforces the “bad” reputation of these
+neighborhoods.
+Both OLS and ML are correlational techniques, and as such do not imply causation.
+This is especially relevant when the evaluated predictors represent proxies of the actual
+concepts that the modeler is trying to evaluate. However, the strong foundation provided
+by the domain knowledge obtained in the first step serves as a way to shift the burden
+of proving causation away from the models.
+Finally, it is worth restating that the routing study is comparative and not a definitive
+solution of the routing problem of naastplaatsing. The reconstruction of the routes from
+the NietRnaast dataset provides an approximation of the actual route, and the timestamp
+sorting may improperly sequence clusters with identical timestamps, as well as include
+clusters that on any specific day were visited by other drivers. The collection penalty
+metric is a simple proxy: if a trash bag is encountered at step 100 of the route, instead
+of step 1, it is not implied that its impact on the cleanliness of that area is one hundred
+fold. Operationally deployable routes were not the goal of this step of the study.
+6.4
+Future Work
+The results of this thesis open several avenues for further research into naastplaatsing
+and its operational response.
+The predictive models used in this thesis are regressors, producing a continuous risk
+score per container cluster. While this is effective for evaluating feature importance and
+designing a comparative routing study, this regression compresses all the information
+of the NietRnaast dataset into a single row of information per container cluster. An
+extension of this approach is the development of a daily classification model, where each
+row corresponds to a specific cluster on a specific day labeled with a 0/1 target variable for
+66
+naastplaatsing occurrence. The predictive features would include cluster characteristics,
+similar to the ones used for this study’s models; furthermore, the temporal information
+of each day, like the specific day of the week, the month of the year, or a holiday marker,
+could be used by this classifier to determine naastplaatsing occurrences. With the benefit
+of reliable timestamps, precise weather variables could be included in the analysis.
+The hyperparameters of the mixed heuristics could also be fine-tuned to extract the
+maximum performance out of these metrics. In particular, the balance of
+factors in the
+risk-distance ratio heuristic and the number k-neighbors heuristic could be readjusted
+for different areas and days, adapting to the heterogeneity of naastplaatsing occurrence
+patterns.
+All the evaluated heuristics are subject to a completeness constraint, in an effort to ensure
+comparability among each other and with the actual routes, mimicking the operational
+modus operandi of NietRnaast. However, a significant portion of the container clusters
+in Rottedam show extremely low predicted risk.
+A Selective Routing heuristic could
+determine a risk threshold used to eliminate certain clusters from select daily routing
+computations. Such an approach could reduce the routing distance quite significantly,
+and the reduction of clusters to visit could lead to shorter times to reach high priority
+clusters.
+67
+Chapter 7
+Conclusion
+The goal of this thesis was to investigate whether the phenomenon of naastplaatsing in
+Rotterdam could be modeled to improve the understanding of its underlying mechanisms,
+while also supporting a more efficient and effective operational response. The findings
+of this research indicate that naastplaatsing can be understood, predicted, and managed
+more intelligently, but only when analytical insights are integrated with organizational
+realities, behavioral dynamics, and the lived expertise of the people who address the
+problem every day.
+This work’s initial step was constructing a theoretical framework based on literature,
+expert interviews, and on-field observations of NietRnaast workers. This framework de-
+scribed naastplaatsing as a wicked problem, characterized by multiple interacting factors,
+misalignment in stakeholder power and interest, and damaging feedback loops. The map-
+ping of stakeholders revealed that the perpetrators, those who generate the problem, hold
+significant behavioral power yet possess little interest in resolving the issue. Conversely,
+many of the actors who care deeply about neighborhood cleanliness have limited formal
+influence. High-level strategic stakeholders must balance cost efficiency with service qual-
+ity, while operational teams focus on feasibility and practicality. This asymmetry is what
+limits the impact of any intervention.
+The multivariate data analysis (MVDA) phase brought quantitative insights to this frame-
+work. Through yearly OLS regression models at neighborhood level, several mechanisms
+emerged as statistically robust: container malfunctions and overflow incidents consistently
+correlate with higher naastplaatsing rates, as does the demographic composition related
+to resident origin. Other hypothesized relationships, such as population prosperity and
+social cohesion, appeared weaker or more scale-dependent, suggesting that they operate
+in more subtle or localized ways. While MVDA cannot capture the full complexity of
+the phenomenon, it allowed for a distinction between stronger and weaker explanatory
+factors. It also showed the limits of traditional statistical techniques, especially with
+systems characterized by many collinear variables.
+Machine Learning modeling extended the analysis into a more granular and operationally
+relevant domain. Tree-based models demonstrated excellent predictive performance at
+the container-cluster level, substantiating the idea that naastplaatsing is a patterned
+phenomenon. The dominance of features expressing the historical behavior of containers
+confirmed the self-reinforcing nature of naastplaatsing. SHAP interpretations further il-
+lustrated the roles of operational disruptions (malfunctions), temporal stress, waste type,
+and operational involvement of municipal waste services.
+68
+These findings deepen the theoretical framework and provide a bridge between causal
+understanding and the ability of ML models of reliably detecting correlation.
+The routing study translated risk estimation into actionable operational application. By
+evaluating five heuristics it showed that NietRnaast’s current operational practice can
+be improved significantly. While purely distance-driven strategies offer significant effi-
+ciency gains, they perform poorly on collection penalty. Conversely, purely risk-driven
+approaches excel at reducing visibility and its multiplier effects, but are operationally
+infeasible due to excessively long distances covered. The ratio heuristic emerged as the
+most balanced method, consistently outperforming the actual routes on both distance
+and collection penalty. This finding demonstrates that a hybrid routing approach is tech-
+nically effective and strategically aligned with the dual priorities of cost and quality that
+define Stadsbeheer’s mandate.
+Together, these analytical components support a coherent set of policy recommendations.
+Stadsbeheer can improve the efficiency of its operational response by integrating routing
+optimization and risk prediction into daily NietRnaast operations, provided that drivers
+and team leaders are directly involved in the design and development of these tools.
+It can also influence the behavioral dynamics that reinforce naastplaatsing by selecting
+container clusters to service at different speeds: quick removal in hotspots to prevent
+spread, slower removal in chronic low-visibility locations to reduce convenience for repeat
+offenders. The final recommendations is to close the gap between strategic decisions and
+operational practice. Many of the current system’s shortcomings, like the flaws in the
+NietRnaast app, are due to a failure of integration between tools and their primary users.
+Collaborative design, institutionalized feedback loops, and structured data sharing are
+enhancements that should be pursued.
+While Stadsbeheer cannot tackle the deep socio-economic roots of naastplaatsing, it can
+shape the conditions under which those causes translate into visible waste. The combined
+use of MVDA, machine learning, and routing optimization provides a robust analytical
+foundation for understanding and managing naastplaatsing. The overarching call to ac-
+tion of this thesis is organizational: technical solutions achieve impact only when they
+are embedded within the people of the system they intend to improve. Addressing naast-
+plaatsing is an operational challenge first and foremost. Still, its behavioral component
+requires a strategic approach; the alignment of all the expertise at the disposal of Stads-
+beheer is fundamental to deal with the challenge posed by this wicked problem.
+69
+Bibliography
+Adadi, A., & Berrada, M. (2018). Peeking inside the black-box: A survey on explainable
+artificial intelligence (xai). IEEE Access, 6, 52138–52160. https://doi.org/10.
+1109/ACCESS.2018.2870052
+Adeleke, O., & Jen, T.-C. (2025). Explainable ai and machine learning-based analysis of
+municipal solid waste generation rate: A south african case study. Waste Man-
+agement, 206, 115036. https://doi.org/https://doi.org/10.1016/j.wasman.2025.
+115036
+Arrieta, A. B., Rodr´ıguez, N. D., Ser, J. D., Bennetot, A., Tabik, S., Barbado, A., Garc´ıa,
+S., Gil-Lopez, S., Molina, D., Benjamins, R., Chatila, R., & Herrera, F. (2019).
+Explainable artificial intelligence (XAI): concepts, taxonomies, opportunities and
+challenges toward responsible AI. CoRR, abs/1910.10045. http://arxiv.org/abs/
+1910.10045
+Bijplaatsingen [Latest access: 18 March 2026]. (2023). NVRD. https://www.nvrd.nl/
+dossier/bijplaatsingen/
+Bohm, K., Smidt, E., & Tintner, J. Application of multivariate data analyses in waste
+management (L. V. de Freitas & A. P. B. R. de Freitas, Eds.). In: Multivari-
+ate analysis in management, engineering and the sciences (L. V. de Freitas &
+A. P. B. R. de Freitas, Eds.). Ed. by de Freitas, L. V., & de Freitas, A. P. B. R.
+London: IntechOpen, 2013. Chap. 2. https://doi.org/10.5772/53975
+Breiman, L. (2001). Random forests. Machine Learning, 45(1), 5–32. https://doi.org/10.
+1023/A:1010933404324
+Containers verdwijnen uit josephlaan: Zo gooien mensen het ernaast en komen er ratten
+[Latest access: 18 March 2026]. (2024). Open Rotterdam. https://openrotterdam.
+nl/containers- verdwijnen- uit- josephlaan- zo- gooien- mensen- het- ernaast- en-
+komen-er-ratten/
+Crook, B., Schl¨uter, M., & Speith, T. (2023). Revisiting the performance-explainability
+trade-off in explainable artificial intelligence (xai). https://arxiv.org/abs/2307.
+14239
+Dereci, U., & Karabekmez, M. E. (2022). The applications of multiple route optimization
+heuristics and meta-heuristic algorithms to solid waste transportation: A case
+study in turkey. Decision Analytics Journal, 4, 100113. https://doi.org/https:
+//doi.org/10.1016/j.dajour.2022.100113
+Du, L., Zuo, J., Vanzo, J., Chang, R., & Zillante, G. (2023). Assessing and predicting the
+illegal dumping risks in relation to road characteristics. Waste Management, 169,
+332–341. https://doi.org/10.1016/j.wasman.2023.07.031
+Epskamp, M., & De Vries, C. (2020). Verklaringen voor naastplaatsingen in rotterdam,
+2018–2019. Onderzoek en Business Intelligence. Rotterdam.
+Evaluatie Vulgraadsysteem Rotterdam (No. 20332-004). (2021, December 21) (Report
+commissioned by Stadsbeheer Rotterdam). KplusV. Arnhem.
+70
+Fang, B., Yu, J., Chen, Z., Osman, A. I., Farghali, M., Ihara, I., Hamza, E. H., Rooney,
+D. W., & Yap, P.-S. (2023). Artificial intelligence for waste management in smart
+cities: A review. Environmental Chemistry Letters, 21(4), 1959–1989. https://doi.
+org/10.1007/s10311-023-01604-3
+Fraternali, P., Morandini, L., & Herrera Gonz´alez, S. L. (2024). Solid waste detection,
+monitoring and mapping in remote sensing images: A survey. Waste Management,
+189, 88–102. https://doi.org/https://doi.org/10.1016/j.wasman.2024.08.003
+Friedman, J. H. (2001). Greedy function approximation: A gradient boosting machine.
+The Annals of Statistics, 29(5), 1189–1232. https : / / doi . org / 10 . 1214 / aos /
+1013203451
+Gemeente waarschuwt voor afval naast de container door beelprojectie [Latest access: 18
+March 2026]. (2026). De Havenloods. https://www.dehavenloods.nl/nieuws/
+algemeen/62750/gemeente- waarschuwt- voor- afval- naast- de- container- door-
+beelde
+Geng, J., Ding, Y., Xie, W., Fang, W., Liu, M., Ma, Z., Yang, J., & Bi, J. (2024). An
+ensemble machine learning model to uncover potential sites of hazardous waste
+illegal dumping based on limited supervision experience. Fundamental Research,
+4(4), 972–978. https://doi.org/https://doi.org/10.1016/j.fmre.2023.06.010
+Glanville, K., & Chang, H.-C. (2015). Mapping illegal domestic waste disposal potential to
+support waste management efforts in queensland, australia. International Journal
+of Geographical Information Science, 29(6), 1042–1058. https://doi.org/10.1080/
+13658816.2015.1008002
+Gordon, A. D. (1984). Biometrics, 40(3), 874–874. Retrieved March 15, 2026, from http:
+//www.jstor.org/stable/2530946
+Gunning, D., Stefik, M., Choi, J., Miller, T., Stumpf, S., & Yang, G.-Z. (2019). Xai—explainable
+artificial intelligence. Science Robotics, 4(37), eaay7120. https://doi.org/10.1126/
+scirobotics.aay7120
+Hemmelmayr, V., Doerner, K. F., Hartl, R. F., & Rath, S. (2013). A heuristic solu-
+tion method for node routing based solid waste collection problems. Journal of
+Heuristics, 19(2), 129–156. https://doi.org/10.1007/s10732-011-9188-9
+Herm, L.-V., Heinrich, K., Wanner, J., & Janiesch, C. (2023). Stop ordering machine
+learning algorithms by their explainability! a user-centered investigation of perfor-
+mance and explainability. International Journal of Information Management, 69,
+102538. https://doi.org/https://doi.org/10.1016/j.ijinfomgt.2022.102538
+Het veelkoppige afvalmonster: waarom boetes alleen de stad niet schoon krijgen [Latest
+access: 18 March 2026]. (2025). AT5. Retrieved March 18, 2026, from https://
+www.at5.nl/artikelen/235623/het- veelkoppige- afvalmonster- waarom- boetes-
+alleen-de-stad-niet-schoon-krijgen
+Hillesluis ervaart afvaloverlast het ergst [Latest access: 18 March 2026]. (2021). Dag-
+blad010. https://dagblad010.nl/politiek/hillesluis-ervaart-afvaloverlast-het-ergst
+Hohl, B. C., Kondo, M. C., Rupp, L. A., Sadler, R. C., Gong, C. H., Le, K., Hertlein,
+M., Kelly, C., & Zimmerman, M. A. (2023). Community identified characteristics
+related to illegal dumping; a mixed methods study to inform prevention. Journal
+of Environmental Management, 346, 118930. https://doi.org/https://doi.org/10.
+1016/j.jenvman.2023.118930
+Holzinger, A. From machine learning to explainable ai. In: In 2018 world symposium on
+digital intelligence for systems and machines (disa). 2018, 55–66. https://doi.org/
+10.1109/DISA.2018.8490530
+71
+Javed, A. R., Ahmed, W., Pandya, S., Maddikunta, P. K. R., Alazab, M., & Gadekallu,
+T. R. (2023). A survey of explainable artificial intelligence for smart cities. Elec-
+tronics, 12(4). https://doi.org/10.3390/electronics12041020
+Johnson, N. E., Ianiuk, O., Cazap, D., Liu, L., Starobin, D., Dobler, G., & Ghandehari,
+M. (2017). Patterns of waste generation: A gradient boosting model for short-
+term waste prediction in new york city. Waste Management, 62, 3–11. https :
+//doi.org/https://doi.org/10.1016/j.wasman.2017.01.037
+Kaza, S., Yao, L. C., Bhada-Tata, P., & Van Woerden, F. (2018). What a waste 2.0: A
+global snapshot of solid waste management to 2050. World Bank. https://doi.org/
+10.1596/978-1-4648-1329-0
+Leichtmann, B., Humer, C., Hinterreiter, A., Streit, M., & Mara, M. (2023). Effects
+of explainable artificial intelligence on trust and human behavior in a high-risk
+decision task. Computers in Human Behavior, 139, 107539. https://doi.org/https:
+//doi.org/10.1016/j.chb.2022.107539
+Liu, J., Li, Q., Gu, W., & Wang, C. (2019). The impact of consumption patterns on
+the generation of municipal solid waste in china: Evidences from provincial data.
+International journal of environmental research and public health, 16, 1717. https:
+//doi.org/10.3390/ijerph16101717
+Louati, A., Son, L. H., & Chabchoub, H. (2019). Smart routing for municipal solid waste
+collection: A heuristic approach. Journal of Ambient Intelligence and Humanized
+Computing, 10(5), 1865–1884. https://doi.org/10.1007/s12652-018-0778-3
+Merkelbach, I., Dewies, M., & Denktas, S. (2021). Committing to keep clean: Nudging
+complements standard policy measures to reduce illegal urban garbage disposal
+in a neighborhood with high levels of social cohesion. Frontiers in Psychology,
+Volume 12 - 2021. https://doi.org/10.3389/fpsyg.2021.660410
+Mikhailov, E., Tupicina, O., Bykov, D., Chertes, K., Rodionova, O., & Pomerantsev, A.
+(2007). Ecological assessment of landfills with multivariate analysis — a feasibil-
+ity study [Special Issue: WSC-5 2006]. Chemometrics and Intelligent Laboratory
+Systems, 88(1), 3–10. https://doi.org/https://doi.org/10.1016/j.chemolab.2006.
+11.006
+Mondal, S., & Mandal, B. (2024). Assessment of urban solid waste management in a
+class ii indian city using geospatial and statistical approaches: A case study of
+rampurhat municipality. Waste Management Bulletin, 1(4), 74–92. https://doi.
+org/10.1016/j.wmb.2023.09.003
+Probst, P., Bischl, B., & Boulesteix, A.-L. (2018). Tunability: Importance of hyperpa-
+rameters of machine learning algorithms. https://arxiv.org/abs/1802.09596
+Rotterdammers zijn afvaloverlast beu [Latest access: 18 March 2026]. (2019). Open Rot-
+terdam. https://openrotterdam.nl/rotterdammers-zijn-afvaloverlast-beu/
+Rudin, C. (2019). Stop explaining black box machine learning models for high stakes
+decisions and use interpretable models instead. https://arxiv.org/abs/1811.10154
+Sakti, A. D., Sembiring, E., Rohayani, P., Fauzan, K. N., Anggraini, T. S., Santoso, C.,
+Patricia, V. A., Ihsan, K. T. N., Ramadan, A. H., Arjasakusuma, S., & Candra,
+D. S. (2023). Identification of illegally dumped plastic waste in a highly polluted
+river in indonesia using sentinel-2 satellite imagery. Scientific Reports, 13(1), 5039.
+https://doi.org/10.1038/s41598-023-32087-5
+Shi, Y., Lv, L., Hu, F., & Han, Q. (2020). A heuristic solution method for multi-depot
+vehicle routing-based waste collection problems. Applied Sciences, 10(7). https:
+//doi.org/10.3390/app10072403
+72
+Syafrudin, S., Ramadan, B. S., Budihardjo, M. A., Munawir, M., Khair, H., Rosmalina,
+R. T., & Ardiansyah, S. Y. (2023). Analysis of factors influencing illegal waste
+dumping generation using gis spatial regression methods. Sustainability, 15(3).
+https://doi.org/10.3390/su15031926
+Thakker, D., Mishra, B. K., Abdullatif, A., Mazumdar, S., & Simpson, S. (2020). Ex-
+plainable artificial intelligence for developing smart cities solutions. Smart Cities,
+3(4), 1353–1382. https://doi.org/10.3390/smartcities3040065
+Vuil naast containers kost steden miljoenen, maar blijft zich opstapelen [Latest access:
+18 March 2026]. (2023). Pointer (KRO-NCRV). https://pointer.kro-ncrv.nl/vuil-
+naast-containers-kost-steden-miljoenen-maar-blijft-zich-opstapelen
+Xia, W., Jiang, Y., Chen, X., & Zhao, R. (2022). Application of machine learning algo-
+rithms in municipal solid waste management: A mini review [PMID: 34269157].
+Waste Management & Research, 40(6), 609–624. https : / / doi . org / 10 . 1177 /
+0734242X211033716
+Yazdani, M., Kabirifar, K., Frimpong, B. E., Shariati, M., Mirmozaffari, M., & Bosk-
+abadi, A. (2021). Improving construction and demolition waste collection service
+in an urban area using a simheuristic approach: A case study in sydney, australia.
+Journal of Cleaner Production, 280, 124138. https://doi.org/https://doi.org/10.
+1016/j.jclepro.2020.124138
+Zhao, Y., Shen, X., Chen, W., & Pan, H. (2024). Energy-efficient dynamic vehicle routing
+for waste collection by q-learning-based hyperheuristic particle swarm optimiza-
+tion. IEEE Access, 12, 56196–56213. https://doi.org/10.1109/ACCESS.2024.
+3389749
+73
+Appendix A
+Supplementary Tables
+A.1
+Interview Participants
+Participant
+Date
+Department
+Role
+Participant A
+04/11/25
+Project Bureau
+Project Leader
+Participant B
+11/11/25
+Project Bureau
+Trainee
+Participant C
+17/11/25
+Project Bureau
+Advisor
+Participant D
+17/11/25
+NietRnaast
+Product Owner
+Participant E
+18/11/25
+Reiniging
+Manager
+Participant F
+19/11/25
+NietRnaast
+Team Leader
+Participant G
+18/12/25
+NietRnaast
+Manager
+Table A.1: List of Interviews Conducted
+74
+A.2
+OLS Regression Variables
+Variable
+Description
+total population
+Total number of residents in the neighborhood
+pop to cluster
+Ratio of residents to container clusters
+population NL
+Share of residents with Dutch origin
+population EU
+Share of residents with non-Dutch EU origin
+population non EU
+Share of residents with non-EU origin
+0 to 14 yrs old
+Number of residents aged 0–14
+15 to 29 yrs old
+Number of residents aged 15–29
+30 to 44 yrs old
+Number of residents aged 30–44
+45 to 64 yrs old
+Number of residents aged 45–64
+65+ yrs old
+Number of elderly residents aged 65+
+cohesion neighborhood
+Indicator of overall neighborhood cohesion
+cohesion neighbors
+Indicator of perceived trust/contact between neighbors
+social cohesion
+Combined social cohesion index
+willingness to move
+Share of residents intending to relocate soon
+total reports 2023
+Total number of operational reports (NRN actions)
+klemmers reports
+Number of jammed container incidents
+klemmers pct
+Share of reports involving container malfunctions
+volle container reports
+Number of full container incidents
+volle pct
+Share of reports involving full containers
+address per km2
+Address density per square kilometer
+workforce participation
+Proportion of residents active in the labor force
+avg income per resident
+Average income level per resident
+low edu
+Number of low-education residents
+mid edu
+Number of middle-education residents
+high edu
+Number of highly educated residents
+Table A.2: OLS Regression Variables and Descriptions
+75
+A.3
+ML Variables
+Feature
+Description
+klemmers rate 2025
+Rate of jammed container incidents in the cluster
+volle container rate 2025
+Rate of full-container incidents in the cluster
+fastest fill time
+Fastest fill time among containers (proxy for load/pressure)
+is scheduled
+Binary indicator for a cluster part of a scheduled route
+has adopter indicator
+Whether the cluster has an assigned container adopter
+nietrnaast visits 2025
+Number of NRN visits to the cluster
+n GFE
+Count of organic waste containers in the cluster
+n GLAS
+Count of glass containers
+n PAPIER
+Count of paper containers
+n REST
+Count of residual waste containers
+n TEXTIEL
+Count of textile containers
+n soort Bovengronds
+Number of above-ground containers
+n soort Halfverdiept
+Number of semi-submerged containers
+n soort Ondergronds
+Number of underground containers
+n inhoud 120L
+Count of 120L containers
+n inhoud 2,8
+Count of 2.8 m3 containers
+n inhoud 3,0
+Count of 3.0 m3 containers
+n inhoud 3,3
+Count of 3.3 m3 containers
+n inhoud 3,5
+Count of 3.5 m3 containers
+n inhoud 4,0
+Count of 4.0 m3 containers
+n inhoud 4,5
+Count of 4.5 m3 containers
+n inhoud 5,0
+Count of 5.0 m3 containers
+n Caf´es
+Number of caf´es near the cluster
+n Fastfoods
+Number of fast-food locations near the cluster
+n Hotel-restaurants
+Number of hotel-restaurants near the cluster
+n Restaurants
+Number of restaurants near the cluster
+distance to milieupark m
+Walking distance from cluster to nearest waste facility
+avg streak
+Average consecutive number of days with naastplaatsing
+bad waste count
+Number of disruptive or bulky waste occurrences
+bad naastplaatsing day share
+Share of naastplaatsing occurring outside peak days
+Table A.3: Machine Learning Features and Descriptions
+76
+A.4
+Toy Cluster-Level Risk Predictions
+Cluster
+Predicted Risk
+0
+0.774
+4
+0.439
+5
+0.859
+1
+0.697
+2
+0.094
+3
+0.976
+6
+0.761
+10
+0.786
+9
+0.128
+8
+0.450
+7
+0.371
+11
+0.927
+12
+0.644
+15
+0.823
+14
+0.443
+13
+0.227
+17
+0.555
+16
+0.064
+18
+0.828
+19
+0.632
+Table A.4: Example Predicted Risk Scores (Scaled 0–1)
+77
+A.5
+Collection Penalty Scoring System
+Action Type (NL)
+Action Type (EN)
+Penalty Score
+Niets aangetroffen
+Nothing found
+0.0
+Klein afval
+Small waste
+1.0
+Karton
+Cardboard
+5.0
+Zakken
+Bags
+5.0
+Grofvuil
+Bulky waste
+5.0
+Volle container
+Full container
+20.0
+Vol cluster (alle containers)
+Entire cluster full
+20.0
+Klemmer
+Jammed container
+20.0
+Chemisch afval
+Chemical waste
+5.0
+Matrassen
+Mattresses
+5.0
+Kerstboom
+Christmas tree
+5.0
+Witgoed
+Large household appliance
+10.0
+PV Handhaver
+Enforcement report (no waste)
+0.0
+Vuile container
+Dirty container
+0.0
+Bouw- of bedrijfsafval
+Construction or commercial waste
+5.0
+PV Reiniger
+Cleaning service report
+0.0
+Straat verzakt
+Street issue
+0.0
+Table A.5: Action Score Map for Collection Penalty (Dutch with English Translation)
+78
+Appendix B
+Model Specifications
+B.0.1
+Decision Tree
+Hyperparameter
+Values
+max depth
+3, 4, 5, 6, 8
+min samples split
+2, 5, 10, 20
+min samples leaf
+1, 2, 5, 10
+Table B.1: Decision Tree Parameter Grid
+B.0.2
+Random Forest
+Hyperparameter
+Values
+n estimators
+200, 400, 800
+max depth
+None, 5, 10, 20
+min samples split
+2, 5, 10
+min samples leaf
+1, 2, 5
+max features
+sqrt, log2, 0.7
+Table B.2: Random Forest Parameter Grid
+B.0.3
+Gradient Boosting
+Hyperparameter
+Values
+max iter
+200, 400, 600
+learning rate
+0.03, 0.05, 0.1
+max depth
+None, 3, 5, 7
+min samples leaf
+10, 20, 50
+max leaf nodes
+15, 31, 63
+Table B.3: GradientBoosting Parameter Grid
+79
+B.0.4
+Hyperparameters
+Model
+Best Parameters
+Best CV R2
+Decision Tree
+max depth = 6
+min samples split = 5
+min samples leaf = 1
+0.902
+Random Forest
+n estimators = 800
+max depth = 20
+max features = 0.7
+min samples leaf = 1
+min samples split = 2
+0.926
+Gradient Boosting
+learning rate = 0.05
+max depth = 3
+max iter = 400
+max leaf nodes = 15
+min samples leaf = 20
+0.928
+Table B.4: Best Hyperparameters from Grid Search
+80
+Appendix C
+Additional Figures
+C.1
+SHAP Summary of Decision Tree regressor
+Figure C.1: SHAP summary plot for Shallow Tree model
+81
+C.2
+Routing Average Performance per Neighborhood
+Figure C.2: Afrikaanderwijk routing summary
+Figure C.3: Beverwaard routing summary
+Figure C.4: Bospolder routing summary
+82
+Figure C.5: Delfshaven routing summary
+Figure C.6: Groot IJsselmonde routing summary
+Figure C.7: Het Lage Land routing summary
+83
+Figure C.8: Kleinpolder routing summary
+Figure C.9: Liskwartier routing summary
+Figure C.10: Prinsenland routing summary
+84
+Figure C.11: Tarwewijk routing summary
+Figure C.12: Tussendijken routing summary
+Figure C.13: Zuidwijk routing summary
+85
