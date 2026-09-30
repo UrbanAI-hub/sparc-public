@@ -42,7 +42,7 @@
     "title_nl": "Voorspellen van de inzet van reinigingsdiensten",
     "desc_en": "Addressing the issue of waste accumulation outside containers (bijplaatsing) in the Netherlands, this project develops a predictive system for waste management. By assessing the severity of accumulation at different locations, the model optimizes truck routing and staff allocation. This enables a shift toward a dynamic collection model based on actual urgency, maximizing the efficiency of logistical resources and ensuring streets remain in optimal condition.",
     "desc_nl": "Met het oog op het probleem van afvalbijplaatsing naast containers in Nederland ontwikkelt dit project een voorspellend systeem voor afvalbeheer en reiniging. Door de ernst van de afvalophoping op verschillende locaties te beoordelen, optimaliseert het model de routes van reinigingswagens en de personeelsinzet. Dit maakt een overgang mogelijk naar een dynamisch inzamelmodel op basis van actuele urgentie, waardoor de efficientie van logistieke middelen wordt gemaximaliseerd en schone straten worden gewaarborgd.",
-    "paper_url": ""
+    "paper_url": "https://repository.tudelft.nl/record/uuid:c48f043c-4957-41d8-94eb-56f11b6b2602"
   },
   {
     "id": "proj_6",
